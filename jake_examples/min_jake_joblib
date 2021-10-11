@@ -1,0 +1,7 @@
+from cypari2 import Pari
+from joblib import Parallel, delayed
+
+def AddOne(v):
+    return v + pari.one()
+
+pari('x_' + str(i + 1))

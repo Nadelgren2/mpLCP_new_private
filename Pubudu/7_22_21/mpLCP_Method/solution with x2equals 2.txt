@@ -1,0 +1,52 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+w1,w2 and w3 are the solutions to slack variables associated with x1 <= 3, x2 <= 2, -x2 <= -2, respectively.
+w4, w5 and w6 are the solutions to dual variables associated with x1>=0, x2>=0 and x3>=0, repectively.
+
+z1,z2 and z3 are the solutions to dual variables associated with x1 <= 3, x2 <= 2, -x2 <= -2, respectively.
+z4, z5 and z6 are the solutions to variables x1, x2, x3, repectively.
+
+L is for parameter lambda.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Region 1: 0 <= L <= 0.4
+
+z1:  2 - 5L
+w2:  0
+z3:  9 - 7L
+z4:  3
+z5:  2
+w6:  2 - 3L
+
+
+Region 2: 0.4 <= L <= 0.5
+
+w1:  (5L - 2)/(2L + 1)
+w2:  0
+z3:  (19L - 9L^2 + 5)/(2L + 1)
+z4:  (L + 5)/(2L + 1)
+z5:  2
+w6:  4 - 8L
+
+
+Region 3: 0.5 <= L <= 0.7819
+
+w1:  (5L + 16L^2 - 6)/(2L + 1)
+w2:  0
+z3:  (31L + 7L^2 - 48L^3 + 1)/(2L + 1)
+z4:  (L - 16L^2 + 9)/(2L + 1)
+z5:  2
+z6:  8L - 4
+
+
+
+Region 4: 0.7819 <= L <= 0.9205
+
+w1:  3
+w2:  0
+z3:  (9L - 44L^2 + 29)/(2(L + 1))
+w4:  -(L - 16L^2 + 9)/(2(L + 1))
+z5:  2
+z6:  (9L + 1)/(2(L + 1))
+
+
+

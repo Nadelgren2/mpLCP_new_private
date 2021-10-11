@@ -1,0 +1,6 @@
+pyomo
+glpk -- optional
+cplex -- optional (also need to run setup.py from cplex's python subdirectory)
+pari -- version 2.11 was not new enough for parallelization. Used 2.14 from git repository
+cypari2
+ipopt -- optional -- see https://coin-or.github.io/Ipopt/INSTALL.html for installation instructions

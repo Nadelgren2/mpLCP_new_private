@@ -1,0 +1,470 @@
+\documentclass[11pt]{article}
+\usepackage{epsfig,amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage[letterpaper,top=.9in, left=.8in, right=.8in, bottom=.4in]{geometry}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{xfrac}
+\usepackage{multicol}
+\usepackage{hyperref}
+\usepackage{calc}
+\usepackage{lipsum}
+\usepackage{setspace}
+\usepackage{blindtext}
+\usepackage{scrextend}
+\usepackage{booktabs}
+\usepackage[linewidth=1pt]{mdframed}
+\usepackage{soul}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows}
+\usepackage{lscape}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage[center]{caption}
+\usepackage{subcaption}
+\usepackage{scalerel}
+\usepackage[noend]{algpseudocode}
+\usepackage{mathrsfs}
+\usepackage{textgreek}
+
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newenvironment{proof}{{\bf Proof:}}{\hfill\rule{2mm}{2mm}}
+
+\pagenumbering{gobble}
+
+\def\filltoend#1{%
+  \noindent
+  \leavevmode % in case it's at the beginning of a line
+  \hbox{}% something not discardable
+  \nobreak % no line break here
+  \leaders\hrule\hskip \if\relax#1\relax 0pt \else #1\fi plus 1fill\relax % the rule
+  \hbox{}% something not discardable
+}
+
+%\def\semester{Spring 2018}
+
+
+\newcommand{\li}[2][1]{\ensuremath{\displaystyle{\lim_{#1 \rightarrow #2}}}}
+\newcommand{\su}[2][1]{\ensuremath{\displaystyle{\sum_{#1}^{#2}}}}
+
+
+\DeclareMathAlphabet{\mathpzc}{OT1}{pzc}{m}{it}
+
+\DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}
+\newcommand*\Let[2]{\State #1 $\gets$ #2}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\rgn}{\textsf{Rgn}}
+\newcommand{\pnt}{\textsf{Pnt}}
+\newcommand{\sgmt}{\textsf{Sgmt}}
+\newcommand{\rt}{\textsf{Root}}
+\newcommand{\lft}{\textsf{Left}}
+\newcommand{\rght}{\textsf{Right}}
+\newcommand{\maxd}{\maxde}
+\newcommand{\mind}{\minde}
+\newcommand{\ipl}{\idptl}
+\newcommand{\ipr}{\idptr}
+\newcommand{\ct}{\childtype}
+\newcommand{\lcup}{\cup} 
+\newcommand{\xbar}{\overline{x}}
+\newcommand{\ybar}{\overline{y}}
+\newcommand{\zbar}{\overline{z}}
+\newcommand{\xp}{x^{\prime}}
+\newcommand{\yp}{y^{\prime}}
+\newcommand{\zp}{z^{\prime}}
+\newcommand{\sts}{\subts}
+\newcommand{\dom}{\leqq}
+\newcommand{\pdom}{\leqq_p}
+\newcommand{\f}{f}
+%\renewcommand{\P}{\mathbb{P}}
+\newcommand{\Ps}{\Psi}
+\newcommand{\ps}{\psi}
+\newcommand{\Om}{\Psi}
+\newcommand{\om}{\psi}
+\newcommand{\x}{\mathpzc{x}}
+\newcommand{\X}{\mathpzc{X}}
+\newcommand{\Ph}{\Phi}
+\newcommand{\ph}{\phi}
+\newcommand{\h}{{}^{\text{th}}}
+\newcommand{\bul}{\scalebox{.45}{\ensuremath{\bullet}}}
+\newcommand{\B}{\mathbin{\ThisStyle{\scalebox{1.15}{$\SavedStyle\ensuremath{\mathpzc{B}}$}}}}
+\newcommand{\N}{\scalebox{1.15}{\ensuremath{\mathpzc{N}}}}
+\newcommand{\J}{\scalebox{1.15}{\ensuremath{\mathpzc{E}}}}
+\newcommand{\AS}{\scalebox{1.15}{\ensuremath{\mathpzc{AS}}}}
+\newcommand{\T}{\scalebox{1.15}{\ensuremath{\mathpzc{T}}}}
+\newcommand{\U}{\scalebox{1.15}{\ensuremath{\mathpzc{U}}}}
+\newcommand{\V}{\scalebox{1.15}{\ensuremath{\mathpzc{V}}}}
+\renewcommand{\S}{\mathit{S}}
+\newcommand{\F}{\mathrm{F}}
+\newcommand{\W}{\scalebox{1.15}{\ensuremath{\mathpzc{W}}}}
+\newcommand{\Rr}{\scalebox{1.15}{\ensuremath{\mathpzc{R}}}}
+\newcommand{\K}{\scalebox{1.15}{\ensuremath{\mathpzc{K}}}}
+\newcommand{\Y}{\scalebox{1.15}{\ensuremath{\mathpzc{Y}}}}
+\newcommand{\fa}{\scalebox{1.15}{\ensuremath{\mathpzc{f}}\hspace{-1mm}}}
+\newcommand{\hy}{\scalebox{1.15}{\ensuremath{\mathpzc{h}}}}
+\newcommand{\G}{\scalebox{1.15}{\ensuremath{\mathpzc{G}}\hspace{-.5mm}}}
+\newcommand{\Pp}{\scalebox{1.15}{\ensuremath{\mathpzc{P}}\hspace{-.5mm}}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\C}{\mathrm{Z}}
+\newcommand{\Bb}{\mathrm{B}}
+\newcommand{\Hh}{\mathrm{H}}
+\newcommand{\Ll}{\mathrm{L}}
+\newcommand{\Ell}{\scalebox{1.15}{\ensuremath{\mathpzc{L}}}}
+\newcommand{\D}{\mathrm{D}}
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\s}{\scriptsize}
+\newcommand{\sB}{{\B}}
+\newcommand{\sJ}{\s\J}
+\newcommand\thickbar[1]{\accentset{\rule{.4em}{.8pt}}{#1}}
+\newcommand\thickbarr[1]{\accentset{\rule{.6em}{.8pt}}{#1}}
+\newcommand{\icomp}{\thickbar{{\large \vphantom{a}} \imath}}
+\newcommand{\lcomp}{\thickbar{{\large \vphantom{a}} \ell}}
+\newcommand{\jcomp}{\thickbar{{\large \vphantom{a}} \jmath}}
+\newcommand{\gamcomp}{\thickbar{{\large \vphantom{a}} \gamma}}
+\newcommand{\xii}{\text{\textxi}}
+\newcommand{\Halmos}{\square}
+\newcommand{\aff}{{aff}}
+\newcommand{\IR}{\mathcal{IR}}
+\newcommand\Tstrut{\rule{0pt}{3ex}} 
+\newcommand\Tstrutt{\rule{0pt}{5ex}} 
+\newcommand\Tstruttt{\rule{0pt}{12ex}}
+\newcommand{\OS}{\mathcal{OS}}
+\DeclareMathOperator{\argmin}{\text{argmin}}
+\DeclareMathOperator{\argmax}{\text{argmax}}
+\newcommand{\CS}{\mathcal{CS}}
+\newcommand{\norm}[1]{\left\Vert #1 \right\Vert}
+\newcommand{\abs}[1]{\left\vert #1 \right\vert}
+\newcommand{\OA}{\overline{\A}}
+\newcommand{\affineset}{\mathscr{A}}
+\newcommand{\paramspace}{\Theta}
+\newcommand{\feasParamspace}{\hat{\Theta}}
+\newcommand{\rankpres}[1]{\Theta_{#1}}
+\newcommand{\g}[1]{g_{#1}}
+\newcommand{\compcone}[2]{\mathcal{C}_{#1}(#2)}
+\newcommand{\paramSubspaceOne}{\Phi}
+\newcommand{\paramSubspaceTwo}{\Upsilon}
+\renewcommand{\sigma}{\upsilon}
+\renewcommand{\Sigma}{\Upsilon}
+\newcommand{\invRegSubspace}[2]{\IR_{#2}(#1)}
+\newcommand{\projOne}{\proj_U \IR_{\B}}
+\newcommand{\projOneParameterized}[1]{\proj_U \IR_{#1}}
+\newcommand{\projTwo}{\proj_V \IR_{\B}}
+\newcommand{\Omeg}[1]{\Omega(#1)}
+\newcommand{\member}[2]{#1.#2}
+\newcommand{\naturals}{\mathbb{N}}
+\newcommand{\powerset}[1]{\mathscr{P}(#1)}
+\newcommand{\projOneOmega}{\proj_U \Omega}
+\newcommand{\projTwoOmega}{\proj_V \Omega}
+\newcommand{\PhiParameterized}[3]{\Phi^{#1, #2, #3}}
+\newcommand{\PhiD}{\Phi^{\Omega, \bul, d}}
+\newcommand{\PhiDparameterized}[1]{\Phi^{\Omega, \bul, #1}}
+\newcommand{\PhiS}{\Phi^{\Omega, \mathpzc{S}, \bul}}
+\newcommand{\PhiSparameterized}[1]{\Phi^{\Omega, #1, \bul}}
+\newcommand{\PhiSD}{\Phi^{\Omega, \mathpzc{S}, d}}
+\newcommand{\PhiSDparameterized}[2]{\Phi^{\Omega, #1, #2}}
+\newcommand{\OmegaSD}{\Omega^{\mathpzc{S}, d}}
+\newcommand{\OSD}{\mathcal{O}^{\Omega, \mathpzc{S}, d}}
+\newcommand{\OmegaSDparameterized}[2]{\Omega^{#1,#2}}
+\newcommand{\xD}{\mathpzc{X}^{\Omega,\bul,\geq d}}
+\newcommand{\zS}{\mathpzc{Z}^{\Omega,\mathpzc{S},\bul}}
+\newcommand{\coefSet}[1]{\Xi_{#1}}
+\newcommand{\coef}[2]{\mu_{#2}\left(#1\right)}
+\newcommand{\extrPt}[2]{\sigma^{#2}\left(#1\right)}
+\newcommand{\map}[2]{\psi\left(#1,#2\right)}
+\newcommand{\et}[2]{\eta_{#2}(#1)}
+\newcommand{\delt}[2]{\delta_{#1}\left(#2\right)}
+\newcommand{\bet}[2]{\beta\left(#2,#1\right)}
+\newcommand{\gam}[3]{\gamma\left(#2,#3,#1\right)}
+\newcommand{\mapp}[3]{\omega\left(#1,#2,#3\right)}
+\newcommand{\mappp}[2]{\psi^*\left(#1,#2\right)}
+\newcommand{\Phip}{\Phi'}
+\newcommand{\identZero}[1]{#1.\C}
+\newcommand{\contains}[2]{#1.\Hh^{#2}}
+\newcommand{\noIntersect}[1]{#1.\E}
+\newcommand{\facets}[1]{#1.\F}
+\newcommand{\dimReducing}[2]{#1.\D^{#2}}
+\newcommand{\invRgn}[1]{\IR_{#1}}
+\newcommand{\constraint}[3]{r_{#1}^{#2}(#3)}
+\newcommand{\ident}{\equiv}
+\newcommand{\tableau}[2]{T_{#1}(#2)}
+\newcommand{\tableauEl}[4]{\left(T_{#1}(#2)\right)_{#3,#4}}
+\renewcommand{\P}{\mathrm{P}}
+\newcommand{\nonnegCol}[2]{#1.\P^{#2}}
+\renewcommand{\complement}[1]{\overline{#1}}
+\newcommand{\hypersurface}[2]{\hy_{#1}^{#2}}
+\renewcommand{\icomp}{\complement{\imath}}
+\renewcommand{\jcomp}{\complement{\jmath}}
+\newcommand{\lhs}[4]{l_{#1}^{#2,#3}(#4)}
+\newcommand{\ball}[2]{B_{#1}(#2)}
+
+\newcommand*\anotherif[2]{\State \textbf{if} #1 \textbf{then} #2}
+\newcommand*\spacedif[3]{\State \hspace*{#1} \textbf{if} #2 \textbf{then} #3}
+\newcommand*\anotherelse[1]{\State \textbf{else} #1}
+\newcommand*\spacedelse[2]{\State \hspace*{#1} \textbf{else} #2}
+
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=black, fill=red!30]
+\tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=blue!30]
+\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=orange!30]
+\tikzstyle{decision} = [diamond, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=green!30]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+\usetikzlibrary{positioning}
+
+
+\title{There will be a title -- I promise}
+
+\author{Nathan Adelgren
+\thanks{Andlinger Center for Energy and the Environment, 
+Princeton University, NJ, USA. 
+\emph{Email}: \texttt{na4592@princeton.edu}}
+%\and 
+%Jacob Adelgren
+%\thanks{He works at a place,
+%No really, He does, USA. \emph{Email}: \texttt{jakesEmail@email.com}}
+}
+
+
+\begin{document} 
+
+\maketitle
+    
+\begin{abstract}
+This paper talks about some stuff.
+\end{abstract}
+    
+\section{Updated Notation}
+
+\begin{enumerate}
+\item Return to the use of $\theta$ rather than the decomposed $(\phi,\upsilon)$.
+
+\item To make it more clear that the sets previously denoted as $\C_\sB$, $\Hh_\sB^i \, \forall\, i \in \B$, $\E_\sB$, $\F_\sB$, and $\D_\sB^i \, \forall\, i \in \B$ are each subsets of $\B$ and are available within any Algorithm presented herein for which $\B$ is an input, we modify the notation as follows: 
+\begin{itemize}
+\item $\C_\sB \longrightarrow \identZero{\B}$
+\item $\Hh_\sB^i \longrightarrow \contains{\B}{i} \quad \forall \, i \in \B$
+\item $\E_\sB \longrightarrow \noIntersect{\B}$
+\item $\F_\sB \longrightarrow \facets{\B}$
+\item $\D_\sB^i \longrightarrow \dimReducing{\B}{i} \quad \forall \, i \in \B$
+\end{itemize}
+
+\item For each $i \in \B$, let 
+\begin{equation}\label{rhs}
+\constraint{\B}{i}{\theta} = \g{\B}\left(Adj(G(\theta)_{\bul \B})\right)_{i\, \bul}q(\theta).
+\end{equation}
+
+\item For each distinct pair of indices $i,j \in \B$, let 
+\begin{equation}\label{lhs}
+\lhs{\B}{i}{j}{\theta} = \g{\B}\left(Adj(G(\theta)_{\bul \B})\right)_{i\, \bul}G(\theta)_{\bul \jcomp}.
+\end{equation}
+
+\item For each $i \in \B$, define 
+\begin{equation}\label{nonnegCol}
+\nonnegCol{\B}{i} := \left\{\ell \in \B: degree(\tableauEl{\B}{\theta}{\ell}{\complement{\imath}}) > 0 \text{ or } \tableauEl{\B}{\theta}{\ell}{\complement{\imath}} \text{ is a strictly positive constant} \right\}
+\end{equation}
+
+\item Given a $\theta \in \paramspace$ and $\epsilon > 0$, let $\ball{\epsilon}{\theta}$ denote the $k$-dimensional open ball of radius $\epsilon$ centered at $\theta$.
+
+\end{enumerate}
+
+\section{Updated Theory}
+
+\begin{enumerate}
+\item We can sometimes identify elements of $F_B$ when solving $NLP_H$.
+\begin{theorem}
+Given a f.c.b. $B$ and distinct $i,j \in \B$, let $(\lambda, \theta)$ be a feasible point of $NLP_H(\B,i,j)$. If $\lambda > 0$ and all inequality constraints of $NLP_H(\B,i,j)$ are satisfied strictly at $(\lambda, \theta)$, then $i \in \facets{\B}$.
+\end{theorem}
+\begin{proof}
+Let $\lambda' = \max\{\lambda, \text{ LHS's of inequalities of } NLP_H(\B,i,j) \text{ at } (\lambda, \theta)\}$. Note that $\lambda' > 0$ since all inequality constraints of $NLP_H(\B,i,j)$ are satisfied strictly. Moreover, $(\lambda', \theta)$ is a feasible point to $NLP_F(\B,i)$ and the objective value of $NLP_F(\B,i)$ at this point is $\lambda' > 0$. Hence, the optimal value of $NLP_F(\B,i)$ must be strictly positive showing that $i \in \facets{\B}$ by Proposition 4.1 of \citep{adelgren2021advancing}.
+\end{proof}
+
+\item We can sometimes determine the dimension of $\invRgn{\B}$ upon finding an element $i$ of $\facets{\B}$.
+\begin{theorem}
+Let a f.c.b. $\B$ and an $i \in \facets{\B}$ be given. If $\contains{\B}{i} = \emptyset$ and there exists a point $(\lambda, \theta)$ that is feasible to $NLP_F(\B,i)$ and for which $\lambda > 0$, then $dim(\invRgn{\B}) = k$. 
+\end{theorem}
+\begin{proof}
+Since $\contains{\B}{i} = \emptyset$, from the structure of $NLP_F(\B,i)$ we know that all defining inequalities of $\invRgn{\B}$ except the one associate with $i \in \B$ and those whose LHS's are identically zero are satisfied strictly at $\theta$. Hence, there exists $\epsilon > 0$ such that these same defining inequalities of $\invRgn{\B}$ are all satisfied strictly at all points in $B_\epsilon(\theta)$. Clearly, the intersection of $B_\epsilon(\theta)$ with the half-space $\constraint{\B}{i}{\theta} \geq 0$ is contained within $\invRgn{\B}$ and has dimension $k$.
+\end{proof}
+
+\item There exists an alternate NLP to $NLP_A(\B,i,j)$ that can be used to determine the adjacency of $\invRgn{\B}$ and $\invRgn{\B'}$ along $\hypersurface{\B}{i}$.
+
+\begin{theorem}
+Let a f.c.b. $\B$ and $i \in \B$ be given such that $dim\left(\invRgn{\B}\right) \geq k-1$ and $dim\left(\invRgn{\B} \cap \hypersurface{\B}{i}\right) = k-1$. For any f.c.b. $\B'\neq\B$ such that $|\B\cap\B'|\geq h-2$, $\invRgn{\B}$ and $\invRgn{\B'}$ are adjacent along $\hypersurface{\B}{i}$ if and only if one of the following conditions holds:
+\begin{enumerate}
+\item $\B' = (\B \setminus \{i\}) \cup \{\complement{\imath}\}$ and $\tableauEl{\B}{\theta}{i}{\complement{\imath}} \not\equiv 0$.
+\item $\B' = (\B \setminus \{i,j\}) \cup \{\complement{\imath},\complement{\jmath}\}$, $\tableauEl{\B}{\theta}{i}{\complement{\imath}} \equiv 0$, 
+ and the following NLP has a strictly positive optimal value:
+
+\begin{multline}\label{exchange}
+NLP_{A'}(\B,i,j):= \\[2mm]
+\begin{array}{ccc}
+\displaystyle\max_{\lambda,\theta} &  \lambda &\\
+ \text{s.t.} %&  
+& \lhs{\B}{j}{i}{\theta} \geq \lambda  &\\
+ & \constraint{\B}{\xii}{\theta} \geq \lambda &\,\, \forall\, \xii\in\left(\B\setminus\left(\identZero{\B}\cup \contains{\B}{i} \cup \{i\}\right)\right)\\
+ & \constraint{\B}{i}{\theta} = 0 &\\
+ & \lhs{\B}{j}{i}{\theta}\constraint{\B}{\xii}{\theta} - \lhs{\B}{\xii}{i}{\theta}\constraint{\B}{j}{\theta} \geq \lambda &\,\, \forall\, \xii\in\left(\nonnegCol{\B}{i} \setminus \{j\}\right)\\
+ & \theta \in \paramspace &
+\end{array}
+\end{multline}
+
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+We focus only on condition (b) as the result is proved for condition (a) in \citep{adelgren2021advancing}.\\
+$(\Leftarrow):$\\
+We establish the desired result by showing that there exists a $(k-1)$-dimensional set $\Theta' \subseteq \paramspace$ such that for all $\theta' \in \Theta'$: (I) $\compcone{\B}{\theta'}$ and $\compcone{\B'}{\theta'}$ are adjacent along $cone\left(G(\theta')_{\bul\, \left(\B\setminus\{i\}\right)} \right)$, (II) $q(\theta')$ lies in $\compcone{\B}{\theta'}$, and (III) $q(\theta')$ lies in $\compcone{\B'}{\theta'}$.
+
+Let $(\lambda^*,\theta^*)$ be a point feasible to $NLP_{A'}(\B,i,j)$ for which $\lambda^* > 0$. Then there must exist an $\epsilon > 0$ such that for all $\theta' \in B_\epsilon(\theta^*)$: (i) $\lhs{\B}{j}{i}{\theta'} > 0$, (ii) $\constraint{\B}{\xii}{\theta'} > 0$ for all $\xii\in\left(\B\setminus\left(\identZero{\B}\cup \contains{\B}{i} \cup \{i\}\right)\right)$, and (iii) $\lhs{\B}{j}{i}{\theta'}\constraint{\B}{\xii}{\theta'} - \lhs{\B}{\xii}{i}{\theta'}\constraint{\B}{j}{\theta'} > 0$ for all $\xii\in\left(\nonnegCol{\B}{i} \setminus \{j\}\right)$. Define
+\begin{equation}\label{cap_theta_prime}
+\Theta' = \ball{\epsilon}{\theta^*} \cap \hypersurface{\B}{i}
+\end{equation}
+and recognize from \eqref{hyperplane} and \eqref{rhs} that because $\constraint{\B}{i}{\theta'} = 0$ , we have $\theta^* \in relint\left(\Theta'\right)$. Thus, $dim\left(\Theta'\right) = dim\left(\hypersurface{\B}{i}\right) = k - 1$.
+
+We now establish claim (I). From \eqref{tableau} and \eqref{lhs} we see that because $\lhs{\B}{j}{i}{\theta'} > 0$ for all $\theta' \in B_\epsilon(\theta^*)$, we have that $\tableauEl{\B}{\theta'}{j}{\icomp} > 0$ for all $\theta' \in \Theta'$. Therefore, by Proposition 4.4 of \citep{adelgren2021advancing} we have that $\compcone{\B}{\theta'}$ and $\compcone{\B'}{\theta'}$ are adjacent along $cone\left(G(\theta')_{\bul\, \left(\B\setminus\{i\}\right)} \right)$ for all $\theta' \in \Theta'$.
+
+Next, we establish claim (II). From \eqref{invariancy_region}, \eqref{hyperplane}, \eqref{rhs}, and \eqref{cap_theta_prime} we see that because $\constraint{\B}{\xii}{\theta'} > 0$ for all $\xii\in\left(\B\setminus\left(\identZero{\B}\cup \contains{\B}{i} \cup \{i\}\right)\right)$ and all $\theta' \in \Theta'$, we have that 
+$\theta' \in relint\left(\invRgn{\B} \cap \hypersurface{\B}{i}\right)$ for all $\theta' \in \Theta'$. Thus, from Observation 2.4 and Definition 2.15 of \citep{adelgren2021advancing}, we have $q(\theta') \in \compcone{\B}{\theta'}$ for all $\theta' \in \Theta'$. 
+
+Finally, we establish claim (III). Recognize that $q(\theta')$ lies in $\compcone{\B'}{\theta'}$ for all $\theta' \in \Theta'$ if and only if for each $\theta' \in \Theta'$, $q(\theta')$ can be represented as a conic combination of the columns of $G(\theta')_{\bul\, \B'}$, i.e., if and only if for each $\theta' \in \Theta'$, there exists $\alpha(\theta') \in \R^h$ such that $\alpha(\theta')_\ell \geq 0$ for all $\ell \in \{1,\dots,h\}$ and 
+\begin{equation}\label{con_comb1}
+q(\theta') = G(\theta')_{\bul\, \B'}\alpha(\theta').
+\end{equation}
+Recognize that because $\B$ is a f.c.b., $\alpha(\theta')$ satisfies \eqref{con_comb1} if and only if it also satisfies
+\begin{equation}\label{con_comb2}
+G(\theta')_{\bul\, \B}^{-1}q(\theta') = G(\theta')_{\bul\, \B}^{-1}G(\theta')_{\bul\, \B'}\alpha(\theta').
+\end{equation}
+%From Definition \ref{inv_rgn_def} and the fact that each $\theta' \in \Theta'$ is also in $\invRgn{\B}$, we know that $det\left(G(\theta')_{\bul\, \B}\right) \neq 0$ for all $\theta' \in \Theta'$. So, we can multiply both sides of \eqref{con_comb2} by $det\left(G(\theta')_{\bul\, \B}\right)$ to obtain 
+%\begin{equation}\label{con_comb3}
+%Adj(G(\theta')_{\bul \B})q(\theta') = Adj(G(\theta')_{\bul \B})G(\theta')_{\bul\, \B'}\alpha(\theta').
+%\end{equation}
+Recognize that \eqref{con_comb2} represents a system of $h$ equations. Assuming that the elements of $\alpha(\theta')$ and the individual equations of \eqref{con_comb2} are indexed by the elements of $\B$, we see that for each $\ell \in \B$, the $\ell\h$ equation of \eqref{con_comb2} is given by
+\begin{equation}\label{con_comb_l}
+\left(G(\theta')_{\bul\, \B}^{-1}q(\theta')\right)_\ell = \su[n \in \B]{}\alpha_n(\theta')\left( G(\theta')_{\bul\, \B}^{-1}G(\theta')_{\bul\, \B'}\right)_{\ell n}.
+\end{equation}
+Since $\B' = (\B \setminus \{i,j\}) \cup \{\complement{\imath},\complement{\jmath}\}$, notice that: (i) when $n = \ell$, we have $\left( G(\theta')_{\bul\, \B}^{-1}G(\theta')_{\bul\, \B'}\right)_{\ell n} = 1$, and (ii) when $n \neq \ell$ and $n \not\in \{i,j\}$, we have $\left( G(\theta')_{\bul\, \B}^{-1}G(\theta')_{\bul\, \B'}\right)_{\ell n} = 0$. Thus, equation \eqref{con_comb_l} can be expressed as
+\begin{equation}\label{con_comb_l2}
+\left(G(\theta')_{\bul\, \B}^{-1}q(\theta')\right)_\ell = \alpha_\ell(\theta') + \alpha_i(\theta')\left( G(\theta')_{\bul\, \B}^{-1}G(\theta')_{\bul\, \B'}\right)_{\ell i} + \alpha_j(\theta')\left( G(\theta')_{\bul\, \B}^{-1}G(\theta')_{\bul\, \B'}\right)_{\ell j}.
+\end{equation}
+Additionally, note that for any $n \in \B \cap \B'$, we have $\left( G(\theta')_{\bul\, \B}^{-1}G(\theta')_{\bul\, \B'}\right)_{\ell n} = \left( G(\theta')_{\bul\, \B}^{-1}G(\theta')\right)_{\ell \complement{n}}$ and, as a result, equation \eqref{con_comb_l2} can be written as 
+\begin{align}\label{con_comb_l3}
+\left(G(\theta')_{\bul\, \B}^{-1}q(\theta')\right)_\ell &= \left\{ 
+\begin{array}{ll}
+\alpha_i(\theta')\left( G(\theta')_{\bul\, \B}^{-1}G(\theta')\right)_{i \icomp} + \alpha_j(\theta')\left( G(\theta')_{\bul\, \B}^{-1}G(\theta')\right)_{i \jcomp} & \text{ if } \ell = i \\
+\alpha_i(\theta')\left( G(\theta')_{\bul\, \B}^{-1}G(\theta')\right)_{j \icomp} + \alpha_j(\theta')\left( G(\theta')_{\bul\, \B}^{-1}G(\theta')\right)_{j \jcomp} & \text{ if } \ell = j \\
+\alpha_\ell(\theta') + \alpha_i(\theta')\left( G(\theta')_{\bul\, \B}^{-1}G(\theta')\right)_{\ell \icomp} + \alpha_j(\theta')\left( G(\theta')_{\bul\, \B}^{-1}G(\theta')\right)_{\ell \jcomp} & \text{ otherwise}
+\end{array} \right.\\
+&= \left\{ 
+\begin{array}{ll}
+\alpha_i(\theta')\tableauEl{\B}{\theta'}{i}{\icomp} + \alpha_j(\theta')\tableauEl{\B}{\theta'}{i}{\jcomp} & \text{ if } \ell = i \\
+\alpha_i(\theta')\tableauEl{\B}{\theta'}{j}{\icomp} + \alpha_j(\theta')\tableauEl{\B}{\theta'}{j}{\jcomp} & \text{ if } \ell = j \\
+\alpha_\ell(\theta') + \alpha_i(\theta')\tableauEl{\B}{\theta'}{\ell}{\icomp} + \alpha_j(\theta')\tableauEl{\B}{\theta'}{\ell}{\jcomp} & \text{ otherwise}
+\end{array} \right. \label{con_comb_l4}
+\end{align}
+where in \eqref{con_comb_l4} follows from \eqref{tableau}. We now show that for each $\ell \in \B$, $\alpha_\ell(\theta') > 0$ follows from \eqref{con_comb_l4} and the fact that each $\theta' \in \Theta'$ satisfies: (i) $\lhs{\B}{j}{i}{\theta'} > 0$, (ii) $\constraint{\B}{\xii}{\theta'} > 0$ for all $\xii\in\left(\B\setminus\left(\identZero{\B}\cup \contains{\B}{i} \cup \{i\}\right)\right)$, and (iii) $\lhs{\B}{j}{i}{\theta'}\constraint{\B}{\xii}{\theta'} - \lhs{\B}{\xii}{i}{\theta'}\constraint{\B}{j}{\theta'} > 0$ for all $\xii\in\left(\nonnegCol{\B}{i} \setminus \{j\}\right)$. To begin, recall that $\tableauEl{\B}{\theta}{i}{\complement{\imath}} \equiv 0$. Next, notice from \eqref{tableau}, \eqref{hyperplane}, \eqref{rhs}, and \eqref{cap_theta_prime} that $\left(G(\theta')_{\bul\, \B}^{-1}q(\theta')\right)_i = 0$ for all $\theta' \in \Theta'$. Thus, from \eqref{con_comb_l4} we have that for every $\theta' \in \Theta'$,
+\begin{align}
+ & \alpha_j(\theta')\tableauEl{\B}{\theta'}{i}{\jcomp} = 0 \nonumber \\
+ \Longrightarrow\quad  & \alpha_j(\theta') = 0. \label{alpha_j}
+\end{align}
+Furthermore, equations \eqref{con_comb_l4} and \eqref{alpha_j} show that for each $\theta' \in \Theta'$,
+\begin{align}
+ & \alpha_i(\theta')\tableauEl{\B}{\theta'}{j}{\icomp} =  \left(G(\theta')_{\bul\, \B}^{-1}q(\theta')\right)_j \nonumber \\
+ \Longrightarrow\quad  & \alpha_i(\theta') = \dfrac{\left(G(\theta')_{\bul\, \B}^{-1}q(\theta')\right)_j}{\tableauEl{\B}{\theta'}{j}{\icomp}}. \label{alpha_i}
+\end{align}
+As we discussed when we established claim (I), the fact that $\lhs{\B}{j}{i}{\theta'} > 0$ for all $\theta' \in \Theta'$ implies that $\tableauEl{\B}{\theta'}{j}{\icomp} > 0$ for all $\theta' \in \Theta'$. Additionally, from \eqref{rhs} and the facts that $j \in \left(\B\setminus\left(\identZero{\B}\cup \contains{\B}{i} \cup \{i\}\right)\right)$ and $\constraint{\B}{\xii}{\theta'} > 0$ for all $\xii\in\left(\B\setminus\left(\identZero{\B}\cup \contains{\B}{i} \cup \{i\}\right)\right)$ and all $\theta' \in \Theta'$, we have that $\left(G(\theta')_{\bul\, \B}^{-1}q(\theta')\right)_j > 0$ for all $\theta' \in \Theta'$. Hence, equation \eqref{alpha_i} shows that $\alpha_i(\theta') > 0$ for all $\theta' \in \Theta'$. Finally, from \eqref{alpha_j} and \eqref{alpha_i} we see that for any $\ell \in \B\setminus\{i,j\}$, equation \eqref{con_comb_l4} can be written as
+\begin{align}
+ & \alpha_\ell + \dfrac{\left(G(\theta')_{\bul\, \B}^{-1}q(\theta')\right)_j}{\tableauEl{\B}{\theta'}{j}{\icomp}}\tableauEl{\B}{\theta'}{\ell}{\icomp} =  \left(G(\theta')_{\bul\, \B}^{-1}q(\theta')\right)_\ell \nonumber \\
+ \Longrightarrow\quad  & \alpha_\ell(\theta') = \left(G(\theta')_{\bul\, \B}^{-1}q(\theta')\right)_\ell - \left(G(\theta')_{\bul\, \B}^{-1}q(\theta')\right)_j\dfrac{\tableauEl{\B}{\theta'}{\ell}{\icomp}}{\tableauEl{\B}{\theta'}{j}{\icomp}}. \label{alpha_l}
+\end{align}
+Now recall that $\lhs{\B}{j}{i}{\theta'}\constraint{\B}{\xii}{\theta'} - \lhs{\B}{\xii}{i}{\theta'}\constraint{\B}{j}{\theta'} > 0$ for all $\xii\in\left(\nonnegCol{\B}{i} \setminus \{j\}\right)$ and all $\theta' \in \Theta'$. Using the fact that $\lhs{\B}{j}{i}{\theta'} > 0$ for all $\theta' \in \Theta'$, this can be rewritten as $\constraint{\B}{\xii}{\theta'} - \constraint{\B}{j}{\theta'} \dfrac{\lhs{\B}{\xii}{i}{\theta'}}{\lhs{\B}{j}{i}{\theta'}} > 0$ for all $\xii\in\left(\nonnegCol{\B}{i} \setminus \{j\}\right)$ and all $\theta' \in \Theta'$. By substituting from \eqref{rhs} and \eqref{lhs} and simplifying, we have 
+\begin{multline}
+\quad \g{\B}\left(Adj(G(\theta')_{\bul \B})\right)_{\xii\, \bul}q(\theta') - \g{\B}\left(Adj(G(\theta')_{\bul \B})\right)_{j\, \bul}q(\theta') \dfrac{\g{\B}\left(Adj(G(\theta')_{\bul \B})\right)_{\xii\, \bul}G(\theta')_{\bul \icomp}}{\g{\B}\left(Adj(G(\theta')_{\bul \B})\right)_{j\, \bul}G(\theta')_{\bul \icomp}} > 0\\ \text{ for all } \xii\in\left(\nonnegCol{\B}{i} \setminus \{j\}\right) \text{ and all } \theta' \in \Theta'\\
+\Longleftrightarrow \dfrac{\left(Adj(G(\theta')_{\bul \B})\right)_{\xii\, \bul}}{det\left( G(\theta')_{\bul\, \B}\right)}q(\theta') - \dfrac{\left(Adj(G(\theta')_{\bul \B})\right)_{j\, \bul}}{det\left( G(\theta')_{\bul\, \B}\right)}q(\theta') \dfrac{\dfrac{\left(Adj(G(\theta')_{\bul \B})\right)_{\xii\, \bul}}{det\left( G(\theta')_{\bul\, \B}\right)}G(\theta')_{\bul \icomp}}{\dfrac{\left(Adj(G(\theta')_{\bul \B})\right)_{j\, \bul}}{det\left( G(\theta')_{\bul\, \B}\right)}G(\theta')_{\bul \icomp}} > 0 \hfill\\ 
+\text{ for all } \xii\in\left(\nonnegCol{\B}{i} \setminus \{j\}\right) \text{ and all } \theta' \in \Theta'\\
+\Longleftrightarrow \left(G(\theta')^{-1}_{\bul\, \B})\right)_{\xii\, \bul}q(\theta') - \left(G(\theta')^{-1}_{\bul\, \B})\right)_{j\, \bul}q(\theta') \dfrac{\left(G(\theta')^{-1}_{\bul\, \B})\right)_{\xii\, \bul}G(\theta')_{\bul \icomp}}{\left(G(\theta')^{-1}_{\bul\, \B})\right)_{j\, \bul}G(\theta')_{\bul \icomp}} > 0 \hfill\\ 
+\text{ for all } \xii\in\left(\nonnegCol{\B}{i} \setminus \{j\}\right) \text{ and all } \theta' \in \Theta'\\
+\Longleftrightarrow \left(G(\theta')^{-1}_{\bul\, \B})q(\theta')\right)_\xii - \left(G(\theta')^{-1}_{\bul\, \B})q(\theta')\right)_j \dfrac{\tableauEl{\B}{\theta'}{\xii}{\icomp}}{\tableauEl{\B}{\theta'}{j}{\icomp}} > 0 \hfill\\ 
+\text{ for all } \xii\in\left(\nonnegCol{\B}{i} \setminus \{j\}\right) \text{ and all } \theta' \in \Theta' \label{alpha_xii}\\
+\end{multline}
+From \eqref{alpha_l} and \eqref{alpha_xii}, it is clear that $\alpha_\ell(\theta') > 0$ for all $\theta' \in \Theta'$ whenever $\ell \in \nonnegCol{\B}{i} \setminus \{i,j\}$. Now suppose $\ell \not\in \left(\nonnegCol{\B}{i} \cup \{i,j\}\right)$. From \eqref{nonnegCol} we see that in this case $\tableauEl{\B}{\theta'}{\ell}{\icomp}$ must be a nonpositive constant. Furthermore, we have already established that $\tableauEl{\B}{\theta'}{j}{\icomp} > 0$ and $\left(G(\theta')_{\bul\, \B}^{-1}q(\theta')\right)_j > 0$ for all $\theta' \in \Theta'$. Also notice from \eqref{Z}, \eqref{H}, and \eqref{rhs} that for each $\ell \in \B \setminus \{i,j\}$, we have that $\left(G(\theta')_{\bul\, \B}^{-1}q(\theta')\right)_\ell \geq 0$ for all $\theta' \in \Theta'$  since $\constraint{\B}{\xii}{\theta'} > 0$ for all $\xii\in\left(\B\setminus\left(\identZero{\B}\cup \contains{\B}{i} \cup \{i\}\right)\right)$ and all $\theta' \in \Theta'$. From these facts and \eqref{alpha_l}, we see that $\alpha_\ell(\theta') \geq 0$ even when $\ell \not\in \left(\nonnegCol{\B}{i} \cup \{i,j\}\right)$. We have now proved that for each $\theta' \in \Theta'$ there exists $\alpha(\theta') \in \R^h$ such that $\alpha(\theta')_\ell \geq 0$ for all $\ell \in \{1,\dots,h\}$ and $q(\theta') = G(\theta')_{\bul\, \B'}\alpha(\theta')$ and hence, claim (III) above is proved.\\
+$(\Rightarrow)$:\\
+The forward direction of the proof is straightforward as $\mathcal{IR}_{\B}$ and $\mathcal{IR}_{\B'}$ can only be adjacent along $\hy_{\B}^i$ if $dim\left(\mathcal{IR}_{\B} \cap \mathcal{IR}_{\B'} \cap \hy_{\B}^i\right) = k-1$. Then, by selecting $\theta' \in relint\left(\mathcal{IR}_{\B} \cap \mathcal{IR}_{\B'} \cap \hy_{\B}^i\right)$, the logic of the reverse direction of this proof can be reversed to show that the equality constraint of $NLP_A'(\B,i,j)$ is satisfied at $\theta'$ and, moreover, all inequality constraints of $NLP_A'(\B,i,j)$ are satisfied strictly at $(\lambda, \theta) = (0,\theta')$. This strict satisfaction of the inequalities of $NLP_A'(\B,i,j)$ when $\lambda = 0$ implies that there must exist an $\epsilon > 0$ such that for all $\lambda' \in \ball{\epsilon}{0}$, all the inequalities of $NLP_A'(\B,i,j)$ are satisfied strictly at $(\lambda',\theta')$. As $\ball{\epsilon}{0} \cap \{\lambda: \lambda > 0\} \neq \emptyset$, this completes the proof.
+\end{proof}
+
+\end{enumerate}
+
+\section{Updated Algorithms}
+
+\begin{algorithm}%[H]
+  \caption{\textsc{Partition}$\paramspace$($\protect\B_0$)~--~Partition the parameter space $\paramspace$.\\
+ \textbf{Input}: An initial f.c.b. $\protect \B_0$ such that $dim(\protect \IR_{\protect \B_0}) = k$.\\
+  \textbf{Output}: A partition of $\feasParamspace$, denoted $\protect\Pp$.}
+\label{algPartitionS}
+\begin{algorithmic}[1]
+\small
+\State Let $\mathcal{S} = \{\B_0\}$ and $\Pp = \{\IR_{\B_0}\}$.
+\While{$\mathcal{S} \neq \emptyset$}{ select $\B$ from $\mathcal{S}$.}
+	\State $\facets{\B} = $ \textsc{BuildF}$(\B)$
+	\For{$i \in \F_{\B}$}{}
+	 	\State Let $(\mathcal{S}',\mathscr{B}) =$ \textsc{GetAdjacentRegionsAcross}$(\B,i,\mathscr{B})$ and set $\mathcal{S} = \mathcal{S} \cup \mathcal{S}'$.
+	 	\For{$\B' \in \mathcal{S}'$}{ set $\Pp = \Pp \cup \IR_{\B'}$.}
+		\EndFor
+	 \EndFor
+\EndWhile
+\State Return $\Pp$.
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}%[H]
+  \caption{\textsc{BuildF}($\protect\B$)~--~Build $\protect \facets{ \protect \B}$.\\
+ \textbf{Input}: A f.c.b. $\protect \B$ such that $dim(\protect \invRgn{\protect \B}) = k$. 
+ \\
+  \textbf{Output}: The set $\protect \facets{\protect \B}$.
+  }
+\label{algBuildF}
+\begin{algorithmic}[1]
+\For{$i \in \left(\B\setminus \left(\identZero{\B} \cup \noIntersect{\B} \cup \facets{\B} \right)\right)$}{ solve $NLP_F(\B,i)$ to find an optimal solution $(\lambda^*,\theta^*)$.}
+	\If{$\lambda^* > 0$}{ add $\left(i \cup \contains{\B}{i}\right)$ to $\facets{\B}$.}
+	\EndIf
+\EndFor
+\State Return $\facets{\B}$.
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[H]
+  \caption{\textsc{BuildZEH}($\protect\B$)~--~Build $\protect \identZero{\protect \B}$, $\protect \noIntersect{\protect \B} $, and $\protect \contains{\protect \B}{i}$ for each $i \in \protect \B$.\\
+ \textbf{Input}: A f.c.b. $\protect \B$ such that $dim(\protect \invRgn{\protect \B}) \geq k-1$. 
+\\
+  \textbf{Output}: The sets $\protect \identZero{\protect \B}$, $\protect \noIntersect{\protect \B}$, $\protect \facets{\protect \B}$, and $\protect \contains{\protect \B}{i}$ for each $i \in \protect \B$.}
+\label{algBuildH}
+\begin{algorithmic}[1]
+\State Let $\identZero{\B} = \noIntersect{\B} = \facets{\B} = \emptyset$.
+\State Let $\contains{\B}{\ell} = \emptyset$ for each $\ell \in \B$.
+\For{$i \in \B$}
+	\If{$\constraint{\B}{i}{\theta} \ident 0$}{ add $i$ to $\identZero{\B}$.}
+	\EndIf
+\EndFor
+\For{$i \in \left(\B\setminus \left(\identZero{\B} \cup \noIntersect{\B}\right)\right)$}
+	\For{$j \in \left(\B \setminus \left(\identZero{\B} \cup \noIntersect{\B} \cup \{i\}\right)\right)$}
+		\If{$j \not\in \contains{\B}{i}$}{ solve $NLP_H(\B,i,j)$ to obtain an optimal solution $(\lambda^*,\theta^*)$.}
+			\If{$\lambda^* = 0$}{ add $\left(j \cup \contains{\B}{j}\right)$ to $\contains{\B}{i}$.}
+			\ElsIf{$\lambda^* < 0$}{ add $i$ to $\noIntersect{\B}$ and exit the \textbf{for} loop beginning on Line 6.}
+			\ElsIf{$\constraint{\B}{\ell}{\theta^*} > 0$ for all $\ell \in \left(\B \setminus \left(\identZero{\B} \cup \{i,j\}\right)\right)$}{ add $i$ to $\facets{\B}$.}		
+			\EndIf
+		\EndIf
+	\EndFor
+\EndFor
+\State Return $\identZero{\B}$, $\noIntersect{\B}$, $\facets{\B}$, and $\contains{\B}{\ell}$ for each $\ell \in \B$.
+\end{algorithmic}
+\end{algorithm}
+
+\bibliographystyle{plainnat}
+\bibliography{/home/nate/Dropbox/citations}
+
+\end{document}

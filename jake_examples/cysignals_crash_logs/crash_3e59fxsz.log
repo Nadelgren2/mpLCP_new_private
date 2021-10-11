@@ -1,0 +1,574 @@
+GNU gdb (Ubuntu 9.2-0ubuntu1~20.04) 9.2
+Copyright (C) 2020 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Type "show copying" and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+    <http://www.gnu.org/software/gdb/documentation/>.
+
+For help, type "help".
+Type "apropos word" to search for commands related to "word".
+[New LWP 111550]
+[New LWP 111551]
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+0x00007f9bd568cdff in __GI___wait4 (pid=111553, stat_loc=stat_loc@entry=0x0, 
+    options=options@entry=0, usage=usage@entry=0x0)
+    at ../sysdeps/unix/sysv/linux/wait4.c:27
+
+Stack backtrace
+---------------
+    stat_loc=stat_loc@entry=0x0, options=options@entry=0, 
+    usage=usage@entry=0x0) at ../sysdeps/unix/sysv/linux/wait4.c:27
+        resultvar = 18446744073709551104
+        sc_cancel_oldtype = 2
+        sc_ret = <optimized out>
+#1  0x00007f9bd568cd7b in __GI___waitpid (pid=<optimized out>, 
+    stat_loc=stat_loc@entry=0x0, options=options@entry=0) at waitpid.c:38
+No locals.
+#2  0x00007f9bd4892ef4 in print_enhanced_backtrace ()
+    at build/src/cysignals/implementation.c:579
+        parent_pid = 111541
+        pid = <optimized out>
+#3  0x00007f9bd4893036 in sigdie (sig=sig@entry=6, 
+    s=s@entry=0x7f9bd489c9b8 "Unhandled SIGABRT during signal handling.")
+    at build/src/cysignals/implementation.c:605
+No locals.
+#4  0x00007f9bd48957e4 in sigdie_for_sig (inside=<optimized out>, sig=6)
+    at build/src/cysignals/implementation.c:159
+No locals.
+#5  cysigs_signal_handler (sig=6) at build/src/cysignals/implementation.c:278
+        inside = <optimized out>
+#6  <signal handler called>
+No locals.
+#7  futex_wait_cancelable (private=<optimized out>, expected=0, 
+    futex_word=0x22827a4) at ../sysdeps/nptl/futex-internal.h:183
+        __ret = -4
+        oldtype = 0
+        err = <optimized out>
+        oldtype = <optimized out>
+        err = <optimized out>
+        __ret = <optimized out>
+        resultvar = <optimized out>
+        __arg4 = <optimized out>
+        __arg3 = <optimized out>
+        __arg2 = <optimized out>
+        __arg1 = <optimized out>
+        _a4 = <optimized out>
+        _a3 = <optimized out>
+        _a2 = <optimized out>
+        _a1 = <optimized out>
+#8  __pthread_cond_wait_common (abstime=0x0, clockid=0, mutex=0x22827a8, 
+    cond=0x2282778) at pthread_cond_wait.c:508
+        spin = 0
+        buffer = {__routine = 0x7f9bd5594050 <__condvar_cleanup_waiting>, 
+          __arg = 0x7fffc8ff0a40, __canceltype = 0, __prev = 0x0}
+        cbuffer = {wseq = 3, cond = 0x2282778, mutex = 0x22827a8, private = 0}
+        err = <optimized out>
+        g = 1
+        flags = <optimized out>
+        g1_start = <optimized out>
+        signals = <optimized out>
+        result = 0
+        wseq = 3
+        seq = 1
+        private = <optimized out>
+        maxspin = <optimized out>
+        err = <optimized out>
+        result = <optimized out>
+        wseq = <optimized out>
+        g = <optimized out>
+        seq = <optimized out>
+        flags = <optimized out>
+        private = <optimized out>
+        signals = <optimized out>
+        g1_start = <optimized out>
+        spin = <optimized out>
+        buffer = <optimized out>
+        cbuffer = <optimized out>
+        s = <optimized out>
+#9  __pthread_cond_wait (cond=0x2282778, mutex=0x22827a8)
+    at pthread_cond_wait.c:647
+No locals.
+#10 0x00007f9bd47003e3 in ?? ()
+   from /usr/lib/x86_64-linux-gnu/libpari-gmp-tls.so.6
+No symbol table info available.
+#11 0x00007f9bd40fd2d6 in gen_parapply ()
+   from /usr/lib/x86_64-linux-gnu/libpari-gmp-tls.so.6
+No symbol table info available.
+#12 0x00007f9bd40fd653 in parapply ()
+   from /usr/lib/x86_64-linux-gnu/libpari-gmp-tls.so.6
+No symbol table info available.
+#13 0x00007f9bd49ab8d3 in __pyx_pf_7cypari2_13pari_instance_9Pari_auto_1348parapply (__pyx_v_f=<optimized out>, __pyx_v_x=<optimized out>, 
+    __pyx_v_self=<optimized out>) at cypari2/pari_instance.c:145817
+        __pyx_v__f = <optimized out>
+        __pyx_v__x = <optimized out>
+        __pyx_v__ret = <optimized out>
+        __pyx_r = <optimized out>
+        __pyx_t_1 = <optimized out>
+        __pyx_t_2 = <optimized out>
+        __pyx_t_3 = <optimized out>
+        __pyx_lineno = 0
+        __pyx_filename = 0x0
+        __pyx_clineno = 0
+#14 0x00007f9bd49abaf2 in __pyx_pw_7cypari2_13pari_instance_9Pari_auto_1349parapply (__pyx_v_self=<optimized out>, 
+    __pyx_args=(<function at remote 0x7f9bd4c95ee0>, [<cypari2.gen.Gen at remote 0x7f9bd3d33b30>, <cypari2.gen.Gen at remote 0x7f9bd3d33b80>]), 
+    __pyx_kwds=<optimized out>) at cypari2/pari_instance.c:145734
+        __pyx_v_f = <optimized out>
+        __pyx_v_x = <optimized out>
+        __pyx_lineno = 0
+        __pyx_filename = 0x0
+        __pyx_clineno = 0
+        __pyx_r = 0x0
+#15 0x00007f9bd4960729 in __Pyx_CyFunction_CallAsMethod (kw=0x0, 
+    args=(<cypari2.pari_instance.Pari at remote 0x7f9bd383b6c0>, <function at remote 0x7f9bd4c95ee0>, [<cypari2.gen.Gen at remote 0x7f9bd3d33b30>, <cypari2.gen.Gen at remote 0x7f9bd3d33b80>]), 
+    func=<cython_function_or_method at remote 0x7f9bd3d2de10>)
+    at cypari2/pari_instance.c:238714
+        argc = <optimized out>
+        new_args = (<function at remote 0x7f9bd4c95ee0>, [<cypari2.gen.Gen at remote 0x7f9bd3d33b30>, <cypari2.gen.Gen at remote 0x7f9bd3d33b80>])
+        self = <optimized out>
+        result = <optimized out>
+        cyfunc = <optimized out>
+        result = <optimized out>
+        cyfunc = <optimized out>
+        argc = <optimized out>
+        new_args = <optimized out>
+        self = <optimized out>
+#16 __Pyx_CyFunction_CallAsMethod (
+    func=<cython_function_or_method at remote 0x7f9bd3d2de10>, 
+    args=(<cypari2.pari_instance.Pari at remote 0x7f9bd383b6c0>, <function at remote 0x7f9bd4c95ee0>, [<cypari2.gen.Gen at remote 0x7f9bd3d33b30>, <cypari2.gen.Gen at remote 0x7f9bd3d33b80>]), kw=0x0) at cypari2/pari_instance.c:42090
+        result = <optimized out>
+        cyfunc = 0x7f9bd3d2de10
+        argc = <optimized out>
+        new_args = <optimized out>
+        self = <optimized out>
+#17 0x00000000005f3010 in _PyObject_MakeTpCall (
+    callable=<cython_function_or_method at remote 0x7f9bd3d2de10>, 
+    args=0x7f9bd4d6cd58, nargs=<optimized out>, keywords=0x0)
+    at ../Objects/call.c:159
+        call = 0x7f9bd49606b0 <__Pyx_CyFunction_CallAsMethod>
+        argstuple = (<cypari2.pari_instance.Pari at remote 0x7f9bd383b6c0>, <function at remote 0x7f9bd4c95ee0>, [<cypari2.gen.Gen at remote 0x7f9bd3d33b30>, <cypari2.gen.Gen at remote 0x7f9bd3d33b80>])
+        kwdict = 0x0
+        result = 0x0
+#18 0x000000000050bf55 in _PyObject_Vectorcall (kwnames=0x0, 
+    nargsf=<optimized out>, args=0x7f9bd4d6cd58, 
+    callable=<cython_function_or_method at remote 0x7f9bd3d2de10>)
+    at ../Include/cpython/abstract.h:125
+        nargs = <optimized out>
+        res = <optimized out>
+        func = <optimized out>
+#19 _PyObject_Vectorcall (kwnames=0x0, nargsf=<optimized out>, 
+    args=0x7f9bd4d6cd58, 
+    callable=<cython_function_or_method at remote 0x7f9bd3d2de10>)
+    at ../Include/cpython/abstract.h:115
+        res = <optimized out>
+        func = <optimized out>
+        res = <optimized out>
+        func = <optimized out>
+        nargs = <optimized out>
+#20 method_vectorcall (method=<optimized out>, args=0x7f9bd4d6cd60, 
+    nargsf=<optimized out>, kwnames=0x0) at ../Objects/classobject.c:60
+        newargs = 0x7f9bd4d6cd58
+        tmp = <method at remote 0x7f9bd4e189c0>
+        self = <cypari2.pari_instance.Pari at remote 0x7f9bd383b6c0>
+        func = <cython_function_or_method at remote 0x7f9bd3d2de10>
+        result = <optimized out>
+        nargs = <optimized out>
+#21 0x000000000056fb87 in _PyObject_Vectorcall (kwnames=0x0, 
+    nargsf=<optimized out>, args=0x7f9bd4d6cd60, 
+    callable=<method at remote 0x7f9bd4e189c0>)
+    at ../Include/cpython/abstract.h:127
+        res = <optimized out>
+        func = <optimized out>
+        res = <optimized out>
+        func = <optimized out>
+        nargs = <optimized out>
+#22 call_function (kwnames=0x0, oparg=<optimized out>, 
+    pp_stack=<synthetic pointer>, tstate=0x2088110) at ../Python/ceval.c:4963
+        func = <method at remote 0x7f9bd4e189c0>
+        w = <optimized out>
+        nkwargs = 0
+        nargs = <optimized out>
+        pfunc = 0x7f9bd4d6cd58
+        x = <optimized out>
+        stack = 0x7f9bd4d6cd60
+        pfunc = <optimized out>
+        func = <optimized out>
+        x = <optimized out>
+        w = <optimized out>
+        nkwargs = <optimized out>
+        nargs = <optimized out>
+        stack = <optimized out>
+#23 _PyEval_EvalFrameDefault (f=<optimized out>, throwflag=<optimized out>)
+    at ../Python/ceval.c:3469
+        sp = <optimized out>
+        res = <optimized out>
+        meth = <optimized out>
+        stack_pointer = <optimized out>
+        next_instr = 0x7f9bd4c9a522
+        opcode = <optimized out>
+        oparg = <optimized out>
+        fastlocals = <optimized out>
+        freevars = <optimized out>
+        retval = <optimized out>
+        runtime = <optimized out>
+        tstate = <optimized out>
+        ceval = <optimized out>
+        eval_breaker = <optimized out>
+        co = <optimized out>
+        instr_ub = -1
+        instr_lb = 0
+        instr_prev = -1
+        first_instr = <optimized out>
+        names = <optimized out>
+        consts = <optimized out>
+        co_opcache = <optimized out>
+        opcode_targets = {0x4b992a <_PyEval_EvalFrameDefault-723590>, 
+          0x56ae1f <_PyEval_EvalFrameDefault+2671>, 
+          0x56bfcd <_PyEval_EvalFrameDefault+7197>, 
+          0x56c25a <_PyEval_EvalFrameDefault+7850>, 
+          0x56bf6f <_PyEval_EvalFrameDefault+7103>, 
+          0x56f657 <_PyEval_EvalFrameDefault+21159>, 
+          0x56ec97 <_PyEval_EvalFrameDefault+18663>, 
+          0x4b992a <_PyEval_EvalFrameDefault-723590>, 
+          0x4b992a <_PyEval_EvalFrameDefault-723590>, 
+          0x56f6c7 <_PyEval_EvalFrameDefault+21271>, 
+          0x4b9b6b <_PyEval_EvalFrameDefault-723013>, 
+          0x56db98 <_PyEval_EvalFrameDefault+14312>, 
+          0x56d7ae <_PyEval_EvalFrameDefault+13310>, 
+          0x4b992a <_PyEval_EvalFrameDefault-723590>, 
+          0x4b992a <_PyEval_EvalFrameDefault-723590>, 
+          0x56df53 <_PyEval_EvalFrameDefault+15267>, 
+          0x4b85e7 <_PyEval_EvalFrameDefault-728521>, 
+          0x4b9220 <_PyEval_EvalFrameDefault-725392>, 
+          0x4b992a <_PyEval_EvalFrameDefault-723590>, 
+          0x56c92d <_PyEval_EvalFrameDefault+9597>, 
+          0x56b51a <_PyEval_EvalFrameDefault+4458>, 
+          0x4b992a <_PyEval_EvalFrameDefault-723590>, 
+          0x56c9d9 <_PyEval_EvalFrameDefault+9769>, 
+          0x56b279 <_PyEval_EvalFrameDefault+3785>, 
+          0x56b780 <_PyEval_EvalFrameDefault+5072>, 
+          0x56af02 <_PyEval_EvalFrameDefault+2898>, 
+          0x56ce84 <_PyEval_EvalFrameDefault+10964>, 
+          0x56c19c <_PyEval_EvalFrameDefault+7660>, 
+          0x56f003 <_PyEval_EvalFrameDefault+19539>, 
+          0x56cc25 <_PyEval_EvalFrameDefault+10357>, 
+          0x4b992a <_PyEval_EvalFrameDefault-723590> <repeats 20 times>, 
+          0x56e68e <_PyEval_EvalFrameDefault+17118>, 
+          0x56f24f <_PyEval_EvalFrameDefault+20127>, 
+          0x4b83c2 <_PyEval_EvalFrameDefault-729070>, 
+          0x56c149 <_PyEval_EvalFrameDefault+7577>, 
+          0x573920 <_PyEval_EvalFrameDefault+38256>, 
+          0x56bdda <_PyEval_EvalFrameDefault+6698>, 
+          0x56d2b8 <_PyEval_EvalFrameDefault+12040>, 
+          0x56f09f <_PyEval_EvalFrameDefault+19695>, 
+          0x4b992a <_PyEval_EvalFrameDefault-723590>, 
+          0x56e400 <_PyEval_EvalFrameDefault+16464>, 
+          0x56b8a1 <_PyEval_EvalFrameDefault+5361>, 
+          0x56ca9b <_PyEval_EvalFrameDefault+9963>, 
+          0x56dcc2 <_PyEval_EvalFrameDefault+14610>, 
+          0x56d0d2 <_PyEval_EvalFrameDefault+11554>, 
+          0x56c022 <_PyEval_EvalFrameDefault+7282>, 
+          0x56dfd5 <_PyEval_EvalFrameDefault+15397>, 
+          0x56cdd7 <_PyEval_EvalFrameDefault+10791>, 
+          0x4b97a9 <_PyEval_EvalFrameDefault-723975>, 
+          0x56b81f <_PyEval_EvalFrameDefault+5231>, 
+          0x56e613 <_PyEval_EvalFrameDefault+16995>, 
+          0x56ebe7 <_PyEval_EvalFrameDefault+18487>, 
+          0x56d180 <_PyEval_EvalFrameDefault+11728>, 
+          0x56c3e4 <_PyEval_EvalFrameDefault+8244>, 
+          0x56f4c1 <_PyEval_EvalFrameDefault+20753>, 
+          0x4b992a <_PyEval_EvalFrameDefault-723590>, 
+          0x56e070 <_PyEval_EvalFrameDefault+15552>, 
+          0x56e2c6 <_PyEval_EvalFrameDefault+16150>, 
+          0x56e361 <_PyEval_EvalFrameDefault+16305>, 
+          0x56f5b1 <_PyEval_EvalFrameDefault+20993>, 
+          0x56e123 <_PyEval_EvalFrameDefault+15731>, 
+          0x4b992a <_PyEval_EvalFrameDefault-723590>, 
+          0x56c70e <_PyEval_EvalFrameDefault+9054>, 
+          0x56d02c <_PyEval_EvalFrameDefault+11388>, 
+          0x56ad5e <_PyEval_EvalFrameDefault+2478>, 
+          0x56e744 <_PyEval_EvalFrameDefault+17300>, 
+          0x56e49f <_PyEval_EvalFrameDefault+16623>, 
+          0x56b6c8 <_PyEval_EvalFrameDefault+4888>, 
+          0x56b65b <_PyEval_EvalFrameDefault+4779>, 
+          0x56c8d1 <_PyEval_EvalFrameDefault+9505>, 
+          0x56cb37 <_PyEval_EvalFrameDefault+10119>, 
+          0x56b94c <_PyEval_EvalFrameDefault+5532>, 
+          0x56f13b <_PyEval_EvalFrameDefault+19851>, 
+          0x56b0a9 <_PyEval_EvalFrameDefault+3321>, 
+          0x56ae7f <_PyEval_EvalFrameDefault+2767>, 
+          0x56ecfb <_PyEval_EvalFrameDefault+18763>, 
+          0x56b1d0 <_PyEval_EvalFrameDefault+3616>, 
+          0x56d69a <_PyEval_EvalFrameDefault+13034>, 
+          0x56f1be <_PyEval_EvalFrameDefault+19982>, 
+          0x4b90b4 <_PyEval_EvalFrameDefault-725756>, 
+          0x4b992a <_PyEval_EvalFrameDefault-723590>, 
+          0x56a57b <_PyEval_EvalFrameDefault+459>, 
+          0x56be80 <_PyEval_EvalFrameDefault+6864>, 
+          0x56b40b <_PyEval_EvalFrameDefault+4187>, 
+          0x56bd58 <_PyEval_EvalFrameDefault+6568>, 
+          0x56f2dc <_PyEval_EvalFrameDefault+20268>, 
+          0x56c65a <_PyEval_EvalFrameDefault+8874>, 
+          0x56a9f0 <_PyEval_EvalFrameDefault+1600>, 
+          0x56a7da <_PyEval_EvalFrameDefault+1066>, 
+          0x56ccd7 <_PyEval_EvalFrameDefault+10535>, 
+          0x56d840 <_PyEval_EvalFrameDefault+13456>, 
+          0x56b3ba <_PyEval_EvalFrameDefault+4106>, 
+          0x56c0d1 <_PyEval_EvalFrameDefault+7457>, 
+          0x56c5bf <_PyEval_EvalFrameDefault+8719>, 
+          0x56afa0 <_PyEval_EvalFrameDefault+3056>, 
+          0x56a755 <_PyEval_EvalFrameDefault+933>, 
+          0x56b023 <_PyEval_EvalFrameDefault+3187>, 
+          0x56a655 <_PyEval_EvalFrameDefault+677>, 
+          0x4b992a <_PyEval_EvalFrameDefault-723590>, 
+          0x4b992a <_PyEval_EvalFrameDefault-723590>, 
+          0x4b992a <_PyEval_EvalFrameDefault-723590>, 
+          0x4b992a <_PyEval_EvalFrameDefault-723590>, 
+          0x4b992a <_PyEval_EvalFrameDefault-723590>, 
+          0x56b5ba <_PyEval_EvalFrameDefault+4618>, 
+          0x4b992a <_PyEval_EvalFrameDefault-723590>, 
+          0x56a508 <_PyEval_EvalFrameDefault+344>, 
+          0x56a5df <_PyEval_EvalFrameDefault+559>, 
+          0x56dece <_PyEval_EvalFrameDefault+15134>, 
+          0x4b992a <_PyEval_EvalFrameDefault-723590>, 
+          0x4b992a <_PyEval_EvalFrameDefault-723590>, 
+          0x4b992a <_PyEval_EvalFrameDefault-723590>, 
+          0x56dd71 <_PyEval_EvalFrameDefault+14785>, 
+          0x56aa7d <_PyEval_EvalFrameDefault+1741>, 
+          0x56baba <_PyEval_EvalFrameDefault+5898>, 
+          0x56b9f7 <_PyEval_EvalFrameDefault+5703>, 
+          0x4b992a <_PyEval_EvalFrameDefault-723590>, 
+          0x56c85d <_PyEval_EvalFrameDefault+9389>, 
+          0x56b330 <_PyEval_EvalFrameDefault+3968>, 
+          0x56cf35 <_PyEval_EvalFrameDefault+11141>, 
+          0x4b9ac6 <_PyEval_EvalFrameDefault-723178>, 
+          0x4b992a <_PyEval_EvalFrameDefault-723590>, 
+          0x4b992a <_PyEval_EvalFrameDefault-723590>, 
+          0x56bc1c <_PyEval_EvalFrameDefault+6252>, 
+          0x56c2b7 <_PyEval_EvalFrameDefault+7943>, 
+          0x56c44a <_PyEval_EvalFrameDefault+8346>, 
+          0x56b004 <_PyEval_EvalFrameDefault+3156>, 
+          0x56bb90 <_PyEval_EvalFrameDefault+6112>, 
+          0x56d8e5 <_PyEval_EvalFrameDefault+13621>, 
+          0x56dc18 <_PyEval_EvalFrameDefault+14440>, 
+          0x56ef3a <_PyEval_EvalFrameDefault+19338>, 
+          0x56d36e <_PyEval_EvalFrameDefault+12222>, 
+          0x56f55e <_PyEval_EvalFrameDefault+20910>, 
+          0x56e5b2 <_PyEval_EvalFrameDefault+16898>, 
+          0x56d36a <_PyEval_EvalFrameDefault+12218>, 
+          0x56e56b <_PyEval_EvalFrameDefault+16827>, 
+          0x4ba010 <_PyEval_EvalFrameDefault-721824>, 
+          0x56d211 <_PyEval_EvalFrameDefault+11873>, 
+          0x56d974 <_PyEval_EvalFrameDefault+13764>, 
+          0x56e1bf <_PyEval_EvalFrameDefault+15887>, 
+          0x56e60a <_PyEval_EvalFrameDefault+16986>, 
+          0x4b992a <_PyEval_EvalFrameDefault-723590>, 
+          0x56ab87 <_PyEval_EvalFrameDefault+2007>, 
+          0x56ac3a <_PyEval_EvalFrameDefault+2186>, 
+          0x56d72c <_PyEval_EvalFrameDefault+13180>, 
+          0x56cfb2 <_PyEval_EvalFrameDefault+11266>, 
+          0x4b992a <_PyEval_EvalFrameDefault-723590> <repeats 92 times>}
+        PyId_displayhook = {next = 0x0, string = 0x8691bc "displayhook", 
+          object = 0x0}
+        PyId_send = {next = 0x0, string = 0x7e9028 "send", object = 0x0}
+        PyId___build_class__ = {
+          next = 0x90ce80 <PyId___builtins__.lto_priv.0>, 
+          string = 0x6cbb7e "__build_class__", object = '__build_class__'}
+        PyId___annotations__ = {next = 0x0, 
+          string = 0x6b97c7 "__annotations__", object = 0x0}
+        PyId___aexit__ = {next = 0x0, string = 0x8692de "__aexit__", 
+          object = 0x0}
+        PyId___aenter__ = {next = 0x0, string = 0x8692d3 "__aenter__", 
+          object = 0x0}
+        PyId___enter__ = {next = 0x936040 <PyId__find_and_load.17579>, 
+          string = 0x6b9e9e "__enter__", object = '__enter__'}
+        PyId___exit__ = {next = 0x936db0 <PyId___enter__.17477>, 
+          string = 0x6b9ea8 "__exit__", object = '__exit__'}
+#24 0x0000000000568d9a in PyEval_EvalFrameEx (throwflag=0, 
+    f=Frame 0x7f9bd4d6cbe0, for file other_small.py, line 15, in <module> ())
+    at ../Python/ceval.c:741
+        interp = 0x2087430
+#25 _PyEval_EvalCodeWithName (_co=<optimized out>, globals=<optimized out>, 
+    locals=<optimized out>, args=<optimized out>, argcount=<optimized out>, 
+    kwnames=<optimized out>, kwargs=0x0, kwcount=<optimized out>, kwstep=2, 
+    defs=0x0, defcount=0, kwdefs=0x0, closure=0x0, name=0x0, qualname=0x0)
+    at ../Python/ceval.c:4298
+        co = <optimized out>
+        f = Frame 0x7f9bd4d6cbe0, for file other_small.py, line 15, in <module> ()
+        retval = 0x0
+        fastlocals = <optimized out>
+        freevars = <optimized out>
+        x = <optimized out>
+        u = <optimized out>
+        total_args = <optimized out>
+        i = <optimized out>
+        j = <optimized out>
+        n = <optimized out>
+        kwdict = <optimized out>
+        tstate = 0x2088110
+#26 0x000000000068cdc7 in PyEval_EvalCodeEx (closure=0x0, kwdefs=0x0, 
+    defcount=0, defs=0x0, kwcount=0, kws=0x0, argcount=0, args=0x0, 
+    locals=<optimized out>, globals=<optimized out>, _co=<optimized out>)
+    at ../Python/ceval.c:4327
+No locals.
+#27 PyEval_EvalCode (co=<optimized out>, globals=<optimized out>, 
+    locals=<optimized out>) at ../Python/ceval.c:718
+No locals.
+#28 0x000000000067e161 in run_eval_code_obj (co=0x7f9bd4cb0450, 
+    globals={'__name__': '__main__', '__doc__': None, '__package__': None, '__loader__': <SourceFileLoader(name='__main__', path='other_small.py') at remote 0x7f9bd4d7db20>, '__spec__': None, '__annotations__': {}, '__builtins__': <module at remote 0x7f9bd4dfa0e0>, '__file__': 'other_small.py', '__cached__': None, 'Pari': <type at remote 0x7f9bd4c53a20>, 'Parallel': <type at remote 0x277fb20>, 'delayed': <function at remote 0x7f9bc334dee0>, 'AddOne': <function at remote 0x7f9bd4ddd280>, 'pari': <cypari2.pari_instance.Pari at remote 0x7f9bd383b6c0>, 'vec': [<cypari2.gen.Gen at remote 0x7f9bd3d33b30>, <cypari2.gen.Gen at remote 0x7f9bd3d33b80>], 'newVec': [<cypari2.gen.Gen at remote 0x7f9bc3343d10>, <cypari2.gen.Gen at remote 0x7f9bc3343db0>]}, 
+    locals={'__name__': '__main__', '__doc__': None, '__package__': None, '__loader__': <SourceFileLoader(name='__main__', path='other_small.py') at remote 0x7f9bd4d7db20>, '__spec__': None, '__annotations__': {}, '__builtins__': <module at remote 0x7f9bd4dfa0e0>, '__file__': 'other_small.py', '__cached__': None, 'Pari': <type at remote 0x7f9bd4c53a20>, 'Parallel': <type at remote 0x277fb20>, 'delayed': <function at remote 0x7f9bc334dee0>, 'AddOne': <function at remote 0x7f9bd4ddd280>, 'pari': <cypari2.pari_instance.Pari at remote 0x7f9bd383b6c0>, 'vec': [<cypari2.gen.Gen at remote 0x7f9bd3d33b30>, <cypari2.gen.Gen at remote 0x7f9bd3d33b80>], 'newVec': [<cypari2.gen.Gen at remote 0x7f9bc3343d10>, <cypari2.gen.Gen at remote 0x7f9bc3343db0>]}) at ../Python/pythonrun.c:1166
+        v = <optimized out>
+#29 0x000000000067e1df in run_mod (mod=<optimized out>, 
+    filename=<optimized out>, 
+    globals={'__name__': '__main__', '__doc__': None, '__package__': None, '__loader__': <SourceFileLoader(name='__main__', path='other_small.py') at remote 0x7f9bd4d7db20>, '__spec__': None, '__annotations__': {}, '__builtins__': <module at remote 0x7f9bd4dfa0e0>, '__file__': 'other_small.py', '__cached__': None, 'Pari': <type at remote 0x7f9bd4c53a20>, 'Parallel': <type at remote 0x277fb20>, 'delayed': <function at remote 0x7f9bc334dee0>, 'AddOne': <function at remote 0x7f9bd4ddd280>, 'pari': <cypari2.pari_instance.Pari at remote 0x7f9bd383b6c0>, 'vec': [<cypari2.gen.Gen at remote 0x7f9bd3d33b30>, <cypari2.gen.Gen at remote 0x7f9bd3d33b80>], 'newVec': [<cypari2.gen.Gen at remote 0x7f9bc3343d10>, <cypari2.gen.Gen at remote 0x7f9bc3343db0>]}, 
+    locals={'__name__': '__main__', '__doc__': None, '__package__': None, '__loader__': <SourceFileLoader(name='__main__', path='other_small.py') at remote 0x7f9bd4d7db20>, '__spec__': None, '__annotations__': {}, '__builtins__': <module at remote 0x7f9bd4dfa0e0>, '__file__': 'other_small.py', '__cached__': None, 'Pari': <type at remote 0x7f9bd4c53a20>, 'Parallel': <type at remote 0x277fb20>, 'delayed': <function at remote 0x7f9bc334dee0>, 'AddOne': <function at remote 0x7f9bd4ddd280>, 'pari': <cypari2.pari_instance.Pari at remote 0x7f9bd383b6c0>, 'vec': [<cypari2.gen.Gen at remote 0x7f9bd3d33b30>, <cypari2.gen.Gen at remote 0x7f9bd3d33b80>], 'newVec': [<cypari2.gen.Gen at remote 0x7f9bc3343d10>, <cypari2.gen.Gen at remote 0x7f9bc3343db0>]}, flags=<optimized out>, arena=<optimized out>)
+    at ../Python/pythonrun.c:1188
+        co = 0x7f9bd4cb0450
+        v = <optimized out>
+#30 0x000000000067e281 in pyrun_file (fp=fp@entry=0x2086d40, 
+    filename=filename@entry='other_small.py', start=start@entry=257, 
+    globals=globals@entry={'__name__': '__main__', '__doc__': None, '__package__': None, '__loader__': <SourceFileLoader(name='__main__', path='other_small.py') at remote 0x7f9bd4d7db20>, '__spec__': None, '__annotations__': {}, '__builtins__': <module at remote 0x7f9bd4dfa0e0>, '__file__': 'other_small.py', '__cached__': None, 'Pari': <type at remote 0x7f9bd4c53a20>, 'Parallel': <type at remote 0x277fb20>, 'delayed': <function at remote 0x7f9bc334dee0>, 'AddOne': <function at remote 0x7f9bd4ddd280>, 'pari': <cypari2.pari_instance.Pari at remote 0x7f9bd383b6c0>, 'vec': [<cypari2.gen.Gen at remote 0x7f9bd3d33b30>, <cypari2.gen.Gen at remote 0x7f9bd3d33b80>], 'newVec': [<cypari2.gen.Gen at remote 0x7f9bc3343d10>, <cypari2.gen.Gen at remote 0x7f9bc3343db0>]}, 
+    locals=locals@entry={'__name__': '__main__', '__doc__': None, '__package__': None, '__loader__': <SourceFileLoader(name='__main__', path='other_small.py') at remote 0x7f9bd4d7db20>, '__spec__': None, '__annotations__': {}, '__builtins__': <module at remote 0x7f9bd4dfa0e0>, '__file__': 'other_small.py', '__cached__': None, 'Pari': <type at remote 0x7f9bd4c53a20>, 'Parallel': <type at remote 0x277fb20>, 'delayed': <function at remote 0x7f9bc334dee0>, 'AddOne': <function at remote 0x7f9bd4ddd280>, 'pari': <cypari2.pari_instance.Pari at remote 0x7f9bd383b6c0>, 'vec': [<cypari2.gen.Gen at remote 0x7f9bd3d33b30>, <cypari2.gen.Gen at remote 0x7f9bd3d33b80>], 'newVec': [<cypari2.gen.Gen at remote 0x7f9bc3343d10>, <cypari2.gen.Gen at remote 0x7f9bc3343db0>]}, closeit=closeit@entry=1, 
+    flags=0x7fffc8ff1118) at ../Python/pythonrun.c:1085
+        arena = 0x7f9bd4c98d30
+        mod = 0x21216d8
+        ret = <optimized out>
+#31 0x000000000067e627 in pyrun_simple_file (flags=0x7fffc8ff1118, closeit=1, 
+    filename='other_small.py', fp=0x2086d40) at ../Python/pythonrun.c:439
+        m = <module at remote 0x7f9bd4de4cc0>
+        set_file_name = 1
+        ret = -1
+        d = {'__name__': '__main__', '__doc__': None, '__package__': None, '__loader__': <SourceFileLoader(name='__main__', path='other_small.py') at remote 0x7f9bd4d7db20>, '__spec__': None, '__annotations__': {}, '__builtins__': <module at remote 0x7f9bd4dfa0e0>, '__file__': 'other_small.py', '__cached__': None, 'Pari': <type at remote 0x7f9bd4c53a20>, 'Parallel': <type at remote 0x277fb20>, 'delayed': <function at remote 0x7f9bc334dee0>, 'AddOne': <function at remote 0x7f9bd4ddd280>, 'pari': <cypari2.pari_instance.Pari at remote 0x7f9bd383b6c0>, 'vec': [<cypari2.gen.Gen at remote 0x7f9bd3d33b30>, <cypari2.gen.Gen at remote 0x7f9bd3d33b80>], 'newVec': [<cypari2.gen.Gen at remote 0x7f9bc3343d10>, <cypari2.gen.Gen at remote 0x7f9bc3343db0>]}
+        v = <optimized out>
+        pyc = <optimized out>
+        m = <optimized out>
+        d = <optimized out>
+        v = <optimized out>
+        set_file_name = <optimized out>
+        ret = <optimized out>
+        pyc = <optimized out>
+        pyc_fp = <optimized out>
+        _py_tmp = <optimized out>
+#32 PyRun_SimpleFileExFlags (fp=0x2086d40, filename=<optimized out>, 
+    closeit=1, flags=0x7fffc8ff1118) at ../Python/pythonrun.c:472
+        filename_obj = 'other_small.py'
+        res = <optimized out>
+#33 0x00000000006b6e62 in pymain_run_file (cf=0x7fffc8ff1118, config=0x20874e0)
+    at ../Modules/main.c:385
+        fp = 0x2086d40
+        unicode = 'other_small.py'
+        bytes = <optimized out>
+        run = <optimized out>
+        filename = <optimized out>
+        sb = {st_dev = 66309, st_ino = 7742822, st_nlink = 1, st_mode = 33204, 
+          st_uid = 1000, st_gid = 1000, __pad0 = 0, st_rdev = 0, 
+          st_size = 299, st_blksize = 4096, st_blocks = 8, st_atim = {
+            tv_sec = 1631105655, tv_nsec = 140836672}, st_mtim = {
+            tv_sec = 1631105655, tv_nsec = 128837282}, st_ctim = {
+            tv_sec = 1631105655, tv_nsec = 132837079}, __glibc_reserved = {0, 
+            0, 0}}
+        filename_str = <optimized out>
+        filename = <optimized out>
+        fp = <optimized out>
+        sb = <optimized out>
+        unicode = <optimized out>
+        bytes = <optimized out>
+        filename_str = <optimized out>
+        run = <optimized out>
+        cfilename_buffer = <optimized out>
+        cfilename = <optimized out>
+        err = <optimized out>
+        ch = <optimized out>
+#34 pymain_run_python (exitcode=0x7fffc8ff1110) at ../Modules/main.c:610
+        interp = 0x2087430
+        config = 0x20874e0
+        main_importer_path = <optimized out>
+        cf = {cf_flags = 0, cf_feature_version = 8}
+        interp = <optimized out>
+        config = <optimized out>
+        main_importer_path = <optimized out>
+        cf = <optimized out>
+        __atomic_load_ptr = <optimized out>
+        __atomic_load_tmp = <optimized out>
+        path0 = <optimized out>
+        res = <optimized out>
+#35 Py_RunMain () at ../Modules/main.c:689
+        exitcode = 0
+#36 0x00000000006b71ed in Py_BytesMain (argc=<optimized out>, 
+    argv=<optimized out>) at ../Modules/main.c:743
+        args = {argc = 2, use_bytes_argv = 1, bytes_argv = 0x7fffc8ff12f8, 
+          wchar_argv = 0x0}
+#37 0x00007f9bd55ce0b3 in __libc_start_main (main=0x4ef190 <main>, argc=2, 
+    argv=0x7fffc8ff12f8, init=<optimized out>, fini=<optimized out>, 
+    rtld_fini=<optimized out>, stack_end=0x7fffc8ff12e8)
+    at ../csu/libc-start.c:308
+        self = <optimized out>
+        result = <optimized out>
+        unwind_buf = {cancel_jmp_buf = {{jmp_buf = {7041536, 
+                -7751234342377587326, 6264496, 140736565547760, 0, 0, 
+                7751122191313698178, 7735424765980605826}, 
+              mask_was_saved = 0}}, priv = {pad = {0x0, 0x0, 0x2, 
+              0x7fffc8ff12f8}, data = {prev = 0x0, cleanup = 0x0, 
+              canceltype = 2}}}
+        not_first_call = <optimized out>
+#38 0x00000000005f96de in _start () at ../Include/internal/pycore_pyerrors.h:13
+No symbol table info available.
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+Cython backtrace
+----------------
+#0  0x00007f9bd568cda0 in __GI___wait4 () at /build/glibc-YbNSs7/glibc-2.31/posix/../sysdeps/unix/sysv/linux/wait4.c:27
+#1  0x00007f9bd568cd70 in __GI___waitpid () at /build/glibc-YbNSs7/glibc-2.31/posix/waitpid.c:38
+#2  0x00007f9bd4892e80 in print_enhanced_backtrace () at /tmp/pip-install-wv0seyyz/cysignals/build/src/cysignals/implementation.c:579
+#3  0x00007f9bd4892fc0 in sigdie () at /tmp/pip-install-wv0seyyz/cysignals/build/src/cysignals/implementation.c:605
+#4  0x00007f9bd48955e2 in sigdie_for_sig () at /tmp/pip-install-wv0seyyz/cysignals/build/src/cysignals/implementation.c:159
+#5  0x00007f9bd48955c0 in cysigs_signal_handler () at /tmp/pip-install-wv0seyyz/cysignals/build/src/cysignals/implementation.c:278
+#6  0x00007f9bd57e9520 in __restore_rt ()
+#7  0x00007f9bd5594359 in futex_wait_cancelable () at /build/glibc-YbNSs7/glibc-2.31/nptl/../sysdeps/nptl/futex-internal.h:183
+#8  0x00007f9bd559418e in __pthread_cond_wait_common () at /build/glibc-YbNSs7/glibc-2.31/nptl/pthread_cond_wait.c:508
+#9  0x00007f9bd5594160 in __pthread_cond_wait () at /build/glibc-YbNSs7/glibc-2.31/nptl/pthread_cond_wait.c:647
+#10 0x0000000000000000 in ?? ()
+#11 0x00007f9bd40fd1a0 in gen_parapply ()
+#12 0x00007f9bd40fd5d0 in parapply ()
+#13 0x00007f9bd49ab7e0 in __pyx_pf_7cypari2_13pari_instance_9Pari_auto_1348parapply () at /tmp/pip-install-wv0seyyz/cypari2/cypari2/pari_instance.c:145817
+#14 0x00007f9bd49abaa0 in __pyx_pw_7cypari2_13pari_instance_9Pari_auto_1349parapply () at /tmp/pip-install-wv0seyyz/cypari2/cypari2/pari_instance.c:145734
+#15 0x00007f9bd49606f0 in __Pyx_CyFunction_CallAsMethod () at /tmp/pip-install-wv0seyyz/cypari2/cypari2/pari_instance.c:238714
+#16 0x00007f9bd49606b0 in __Pyx_CyFunction_CallAsMethod () at /tmp/pip-install-wv0seyyz/cypari2/cypari2/pari_instance.c:42090
+#17 0x00000000005f2ec0 in _PyObject_MakeTpCall () at /build/python3.8-CoVRmP/python3.8-3.8.10/build-static/../Objects/call.c:159
+#18 0x000000000050bf3f in _PyObject_Vectorcall () at /build/python3.8-CoVRmP/python3.8-3.8.10/build-static/../Include/cpython/abstract.h:125
+#19 0x000000000050b52e in _PyObject_Vectorcall () at /build/python3.8-CoVRmP/python3.8-3.8.10/build-static/../Include/cpython/abstract.h:115
+#20 0x000000000050b4f0 in method_vectorcall () at /build/python3.8-CoVRmP/python3.8-3.8.10/build-static/../Objects/classobject.c:60
+#21 0x000000000056fb54 in _PyObject_Vectorcall () at /build/python3.8-CoVRmP/python3.8-3.8.10/build-static/../Include/cpython/abstract.h:127
+#22 0x000000000056fb24 in call_function () at /build/python3.8-CoVRmP/python3.8-3.8.10/build-static/../Python/ceval.c:4963
+#23 0x000000000056a3b0 in _PyEval_EvalFrameDefault () at /build/python3.8-CoVRmP/python3.8-3.8.10/build-static/../Python/ceval.c:3469
+#24 0x0000000000568d82 in <Cython.Debugger.libpython.PyUnicodeObjectPtr object at 0x7f0f44457a60> () at other_small.py:15
+    10    
+    11    #works
+    12    newVec = Parallel(n_jobs=1)(delayed(AddOne)(i) for i in vec)
+    13    print(newVec)
+    14    
+>   15    print(pari.parapply(lambda i: i + pari.one(), vec))
+#25 0x0000000000568b30 in _PyEval_EvalCodeWithName () at /build/python3.8-CoVRmP/python3.8-3.8.10/build-static/../Python/ceval.c:4298
+#26 0x000000000068cda8 in PyEval_EvalCodeEx () at /build/python3.8-CoVRmP/python3.8-3.8.10/build-static/../Python/ceval.c:4327
+#27 0x000000000068cda0 in PyEval_EvalCode () at /build/python3.8-CoVRmP/python3.8-3.8.10/build-static/../Python/ceval.c:718
+#28 0x000000000067e120 in run_eval_code_obj () at /build/python3.8-CoVRmP/python3.8-3.8.10/build-static/../Python/pythonrun.c:1166
+#29 0x000000000067e190 in run_mod () at /build/python3.8-CoVRmP/python3.8-3.8.10/build-static/../Python/pythonrun.c:1188
+#30 0x000000000067e200 in pyrun_file () at /build/python3.8-CoVRmP/python3.8-3.8.10/build-static/../Python/pythonrun.c:1085
+#31 0x000000000067e4bd in pyrun_simple_file () at /build/python3.8-CoVRmP/python3.8-3.8.10/build-static/../Python/pythonrun.c:439
+#32 0x000000000067e490 in PyRun_SimpleFileExFlags () at /build/python3.8-CoVRmP/python3.8-3.8.10/build-static/../Python/pythonrun.c:472
+#33 0x00000000006b6d85 in pymain_run_file () at /build/python3.8-CoVRmP/python3.8-3.8.10/build-static/../Modules/main.c:385
+#34 0x00000000006b6c6a in pymain_run_python () at /build/python3.8-CoVRmP/python3.8-3.8.10/build-static/../Modules/main.c:610
+#35 0x00000000006b6c50 in Py_RunMain () at /build/python3.8-CoVRmP/python3.8-3.8.10/build-static/../Modules/main.c:689
+#36 0x00000000006b71c0 in Py_BytesMain () at /build/python3.8-CoVRmP/python3.8-3.8.10/build-static/../Modules/main.c:743
+#37 0x00007f9bd55cdfc0 in __libc_start_main () at /build/glibc-YbNSs7/glibc-2.31/csu/../csu/libc-start.c:308
+#38 0x00000000005f96b0 in _start () at /build/python3.8-CoVRmP/python3.8-3.8.10/build-static/../Include/internal/pycore_pyerrors.h:13
+
+[Inferior 1 (process 111541) detached]
+27	../sysdeps/unix/sysv/linux/wait4.c: No such file or directory.
