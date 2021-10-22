@@ -28,13 +28,13 @@ mpLCPsolver employs the methodology previously developed by N. Adelgren.[^fn1]
 mpLCPsolver is written in Python and is released as open source code under the (enter license information here).
 The code has been written by Nathan and Jacob Adelgren.
 
-mpLCPsolver has only been tested on Linux systems, but should be compatible with other operating systems as long as all dependencies listed below can be met. -- Jake correct this if it's wrong.
-
+mpLCPsolver has only been tested on Linux systems, but should be compatible with other operating systems as long as all dependencies listed below can be met.
 
 ### Dependencies
 
 mpLCPsolver depends on:
 
+- Python 3 -- download from python.org or install with your favorite package manager
 - [Pyomo](http://www.pyomo.org/) -- Can be installed using pip
   - A solver for linear programs (LP's) ("visible" to pyomo), such as [GLPK](https://www.gnu.org/software/glpk/), [CPLEX](https://www.ibm.com/analytics/cplex-optimizer), [Gurobi](https://www.gurobi.com/), [Xpress](https://www.fico.com/en/products/fico-xpress-optimization), etc.
   - *Optionally* a solver for nonlinear programs (NLP's) (also "visible" to pyomo) can be provided. Some possibilities are [Ipopt](https://coin-or.github.io/Ipopt/), [Conopt](http://www.conopt.com/), [Baron](https://minlp.com/baron-solver), etc. When no NLP solver is provided, mpLCPsolver employs a variant of an ellipsoid method based on the work of Shah, et al.[^fn2]
