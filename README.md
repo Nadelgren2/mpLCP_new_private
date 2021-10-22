@@ -4,13 +4,7 @@
 
 mpLCPsolver is a software package designed to solve the multiparametric Linear Complementarity Problem (mpLCP):
 
-\[
-\begin{array}{c}
-w - M(\theta)z = q(\theta)\\[1mm]
-w^\top z = 0\\[1mm]
-w,z \geq 0
-\end{array}
-\]
+![equation](https://latex.codecogs.com/svg.image?\begin{array}{c}w&space;-&space;M(\theta)z&space;=&space;q(\theta)\\[1mm]w^\top&space;z&space;=&space;0\\[1mm]w,z&space;\geq&space;0\end{array}&space;" title="\begin{array}{c}w - M(\theta)z = q(\theta)\\[1mm]w^\top z = 0\\[1mm]w,z \geq 0\end{array})
 
 mpLCPsolver employs the methodology previously developed by N. Adelgren.[^fn1]
 
