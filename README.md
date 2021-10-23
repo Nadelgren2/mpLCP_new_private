@@ -53,7 +53,7 @@ The data file may have any extension, but must be a text file containing the fol
 - h -- an integer -- the dimension of mpLCP decision variable vectors.
 - k -- an integer -- the number of parameters present in the instance of mpLCP.
 - M_data -- a matrix   -- describes the nonzero contents of $M(\theta)$ in the following format:
-  - Each row of M must consist of four entries (comma delimited): 
+  - Each row of M_data must consist of four entries (comma delimited): 
     1. row index
     2. column index
     3. parameter index (0 indicates the constant term)
