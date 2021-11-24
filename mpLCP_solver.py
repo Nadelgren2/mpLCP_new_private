@@ -34,6 +34,9 @@ from counter import Counter
 pari = Pari()
 pari.default("nbthreads", multiprocessing.cpu_count())
 
+#turn off pyomo warnings
+logging.getLogger('pyomo.core').setLevel(logging.ERROR)
+
 # Declare Variables, etc
 numVar          = 0
 numParam        = 0
@@ -43,6 +46,7 @@ useLemke        = False
 useCrissCross   = False
 nlpsAsFeasProbs = False
 checkFwithEH    = True
+checkDimWithF   = True
 linearSolver    = "glpk"
 nonlinearSolver = ""
 gMatrix         = 0
@@ -63,14 +67,15 @@ ellipsoidIter   = 50
 
 # Set parameters using command line flags
 if len(sys.argv) > 2:
-    linearSolver, nonlinearSolver, parallelPivots, useCrissCross, nlpsAsFeasProbs, checkFwithEH = ReadFlags(sys, 
-                                                                                                            logging, 
-                                                                                                            linearSolver, 
-                                                                                                            nonlinearSolver, 
-                                                                                                            parallelPivots, 
-                                                                                                            useCrissCross, 
-                                                                                                            nlpsAsFeasProbs,
-                                                                                                            checkFwithEH)
+    linearSolver, nonlinearSolver, parallelPivots, useCrissCross, nlpsAsFeasProbs, checkFwithEH, checkDimWithF = ReadFlags(sys, 
+                                                                                                                            logging, 
+                                                                                                                            linearSolver, 
+                                                                                                                            nonlinearSolver, 
+                                                                                                                            parallelPivots, 
+                                                                                                                            useCrissCross, 
+                                                                                                                            nlpsAsFeasProbs,
+                                                                                                                            checkFwithEH,
+                                                                                                                            checkDimWithF)
 
 # Read in the problem instance
 numVar, numParam, gMatrix, xVar, paramSpace, mIsNumeric = ReadFile(pari, sys, re, numVar, numParam, gMatrix, xVar, paramSpace, gxInitialized, mIsNumeric)
@@ -135,11 +140,16 @@ else:
 
 print("Current Basis:")
 print(basis)
-rgn0 = InvRgn(re, pari, pyo, gMatrix, basis, xVar, startingPoint, epsilon, nonlinearSolver, Q0, midpoint, ellipsoidTol, ellipsoidIter, paramSpace, nlpsAsFeasProbs, checkFwithEH)
+rgn0 = InvRgn(re, pari, pyo, gMatrix, basis, xVar, startingPoint, epsilon, nonlinearSolver, Q0, midpoint, ellipsoidTol, ellipsoidIter, paramSpace, nlpsAsFeasProbs, checkFwithEH, checkDimWithF)
 
 if feasible:
 
-    fullDim = rgn0.IsFullDim(re, pari, pyo)
+    dim = rgn0.Dim(re, pari, pyo)
+    print("\n\nDim:")
+    print(dim)
+    fullDim = True
+    if dim < len(xVar) - 2:
+        fullDim = False
     
     if not fullDim:
         gMatrix = originalGmatrix
@@ -161,16 +171,16 @@ if not feasible:   # Traditional Phase 1 is required for determining the startin
 
 # If a feasible starting solution has been found after Phase 1, start Phase 2
 if feasible:
-    
+    print("\n\nFeasible. Process Region.")
     while numToProcess.Value() > 0:
         if not q.empty():
             rgn = q.get()
             if parallel:
-                p = multiprocessing.Process(target=ProcessRegion, args=(rgn, q, discoveredBases, finalPartition))
+                p = multiprocessing.Process(target=ProcessRegion, args=(rgn, q, discoveredBases, finalPartition, re, pari, pyo, paramSpace, parallelPivots))
                 p.start()
                 procs.append(p)
             else:
-                ProcessRegion(rgn, q, discoveredBases, finalPartition)
+                ProcessRegion(rgn, q, discoveredBases, finalPartition, re, pari, pyo, paramSpace, parallelPivots)
         numToProcess.Decrement()
     
     if parallel:

@@ -44,7 +44,7 @@ mpLCPsolver depends on:
 
 mpLCPsolver is called from the command line as follows:
 
-    > python3 mpLCPsolver.py /path/to/data/file (options)
+    > python3 mpLCP_solver.py /path/to/data/file (options)
   
 #### Data File
 
@@ -150,6 +150,7 @@ Options can be passed to mpLCPsolver as command line flags in the form "-Flag Va
 - -useCrissCross -- A boolean indicating whether or not the Criss Cross method[^fn3] for LCP should be used in attempt to find a starting basis. Note that if a starting basis is successfully discovered using the Criss Cross method, Phase 1 of the method of N. Adelgren$^1$ is skipped, which can provide a significant decrease in execution time. (Default: False)
 - -nlpFeas -- A boolean indicating whether or not NLP problems should be posed as feasibility problems rather than optimization problems. Specifically, the NLP's solved internally by mpLCPsolver do not need solved to optimality in order for the methodology employed by mpLCPsolver to function correctly. Only a feasible point with strictly positive (or negative, depending on the situation) objective value is needed. So, posing the problem as a feasibility problem by setting the objective as a constant and adding a constraint forcing the appropriate strict sign of the original objective may result in decreased execution times. (Default: False)
 - -checkFwithEH -- A boolean indicating whether or not to check if any of the defining constraints of an invariancy region can be shown to form (k-1)-dimensional  boundaries of the region while building the special sets E and H. (Default: True)
+- -checkDimWithF -- A boolean indicating whether or not to check the dimension of an invariancy region while building the special set F. (Default: True)
 
 **Note**: At the command line, appropriate values for booleans are assumed to be "T" and "F".
 

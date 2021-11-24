@@ -55,12 +55,18 @@ def PrintInvalidParameterMessage(flag, curValue, validValues, logging):
 #                               can be shown to form (k-1)-dimensional 
 #                               boundaries of the region while building the 
 #                               special sets E and H.
+#           checkDimWithF   --  a boolean indicating whether or not to check
+#                               the dimension of an invariancy region when 
+#                               building the set F.
 #
 # Outputs:  linearSolver
 #           nonlinearSolver
 #           parallelPivots
 #           useCrissCross
-def ReadFlags(sys, logging, linearSolver, nonlinearSolver, parallelPivots, useCrissCross, nlpsAsFeasProbs, checkFwithEH):
+#           nlpsAsFeasProbs
+#           checkFwithEH
+#           checkDimWithF
+def ReadFlags(sys, logging, linearSolver, nonlinearSolver, parallelPivots, useCrissCross, nlpsAsFeasProbs, checkFwithEH, checkDimWithF):
     # Read the flags
     
     i = 2
@@ -109,6 +115,14 @@ def ReadFlags(sys, logging, linearSolver, nonlinearSolver, parallelPivots, useCr
                     checkFwithEH = False
                 else:
                     PrintInvalidParameterMessage("-checkFwithEH", checkFwithEH, "T and F", logging);
+            elif sys.argv[i] == "-checkDimWithF":
+                i += 1
+                if sys.argv[i].upper() == "T":
+                    checkDimWithF = True
+                elif sys.argv[i].upper() == "F":
+                    checkDimWithF = False
+                else:
+                    PrintInvalidParameterMessage("-checkDimWithF", checkDimWithF, "T and F", logging);
         i += 1
     
-    return linearSolver, nonlinearSolver, parallelPivots, useCrissCross, nlpsAsFeasProbs, checkFwithEH
+    return linearSolver, nonlinearSolver, parallelPivots, useCrissCross, nlpsAsFeasProbs, checkFwithEH, checkDimWithF

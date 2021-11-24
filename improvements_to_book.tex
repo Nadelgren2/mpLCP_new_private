@@ -49,7 +49,14 @@
   \hbox{}% something not discardable
 }
 
-%\def\semester{Spring 2018}
+
+\makeatletter
+\patchcmd{\ALG@step}{\addtocounter{ALG@line}{1}}{\refstepcounter{ALG@line}}{}{}
+\newcommand{\ALG@lineautorefname}{Line}
+\makeatother
+
+\newcommand{\algorithmautorefname}{Algorithm}
+
 
 
 \newcommand{\li}[2][1]{\ensuremath{\displaystyle{\lim_{#1 \rightarrow #2}}}}
@@ -204,6 +211,7 @@
 \renewcommand{\jcomp}{\complement{\jmath}}
 \newcommand{\lhs}[4]{l_{#1}^{#2,#3}(#4)}
 \newcommand{\ball}[2]{B_{#1}(#2)}
+\renewcommand{\dim}[1]{{#1}.d}
 
 \newcommand*\anotherif[2]{\State \textbf{if} #1 \textbf{then} #2}
 \newcommand*\spacedif[3]{\State \hspace*{#1} \textbf{if} #2 \textbf{then} #3}
@@ -253,6 +261,11 @@ This paper talks about some stuff.
 \item $\D_\sB^i \longrightarrow \dimReducing{\B}{i} \quad \forall \, i \in \B$
 \end{itemize}
 
+\item We also associate the following scalar information with each f.c.b. $\B$. Again, we assume that each is available within any Algorithm presented herein for which $\B$ is an input.
+\begin{itemize}
+\item $\dim{\B}$ -- intended to represent the dimension of $\invRgn{\B}$.
+\end{itemize}
+
 \item For each $i \in \B$, let 
 \begin{equation}\label{rhs}
 \constraint{\B}{i}{\theta} = \g{\B}\left(Adj(G(\theta)_{\bul \B})\right)_{i\, \bul}q(\theta).
@@ -275,7 +288,7 @@ This paper talks about some stuff.
 \section{Updated Theory}
 
 \begin{enumerate}
-\item We can sometimes identify elements of $F_B$ when solving $NLP_H$.
+\item We can sometimes identify elements of $\facets{\B}$ when solving $NLP_H$.
 \begin{theorem}
 Given a f.c.b. $B$ and distinct $i,j \in \B$, let $(\lambda, \theta)$ be a feasible point of $NLP_H(\B,i,j)$. If $\lambda > 0$ and all inequality constraints of $NLP_H(\B,i,j)$ are satisfied strictly at $(\lambda, \theta)$, then $i \in \facets{\B}$.
 \end{theorem}
@@ -430,37 +443,41 @@ The forward direction of the proof is straightforward as $\mathcal{IR}_{\B}$ and
 \label{algBuildF}
 \begin{algorithmic}[1]
 \For{$i \in \left(\B\setminus \left(\identZero{\B} \cup \noIntersect{\B} \cup \facets{\B} \right)\right)$}{ solve $NLP_F(\B,i)$ to find an optimal solution $(\lambda^*,\theta^*)$.}
-	\If{$\lambda^* > 0$}{ add $\left(i \cup \contains{\B}{i}\right)$ to $\facets{\B}$.}
+	\If{$\lambda^* > 0$}{}
+		\State Add $\left(i \cup \contains{\B}{i}\right)$ to $\facets{\B}$.
+		\If{$\dim{\B} < k$ and $\contains{\B}{i} = \emptyset$}{ set $\dim{\B} = k$.}
+		\EndIf
 	\EndIf
 \EndFor
-\State Return $\facets{\B}$.
+\State Return $\facets{\B}$ and $\dim{\B}$.
 \end{algorithmic}
 \end{algorithm}
 
 \begin{algorithm}[H]
-  \caption{\textsc{BuildZEH}($\protect\B$)~--~Build $\protect \identZero{\protect \B}$, $\protect \noIntersect{\protect \B} $, and $\protect \contains{\protect \B}{i}$ for each $i \in \protect \B$.\\
+  \caption{\textsc{BuildZEH}($\protect\B$)~--~Build $\protect \identZero{\protect \B}$, $\protect \noIntersect{\protect \B} $, and $\protect \contains{\protect \B}{i}$ for each $i \in \protect \B$. Initialize $\protect \facets{\protect \B}$ and $\protect \dim{\protect \B}$.\\
  \textbf{Input}: A f.c.b. $\protect \B$ such that $dim(\protect \invRgn{\protect \B}) \geq k-1$. 
 \\
   \textbf{Output}: The sets $\protect \identZero{\protect \B}$, $\protect \noIntersect{\protect \B}$, $\protect \facets{\protect \B}$, and $\protect \contains{\protect \B}{i}$ for each $i \in \protect \B$.}
 \label{algBuildH}
 \begin{algorithmic}[1]
-\State Let $\identZero{\B} = \noIntersect{\B} = \facets{\B} = \emptyset$.
-\State Let $\contains{\B}{\ell} = \emptyset$ for each $\ell \in \B$.
+\State Let $\identZero{\B} = \noIntersect{\B} = \facets{\B} = \emptyset$, $\contains{\B}{\ell} = \emptyset$ for each $\ell \in \B$, and $\dim{\B} = 0$.
 \For{$i \in \B$}
 	\If{$\constraint{\B}{i}{\theta} \ident 0$}{ add $i$ to $\identZero{\B}$.}
 	\EndIf
 \EndFor
 \For{$i \in \left(\B\setminus \left(\identZero{\B} \cup \noIntersect{\B}\right)\right)$}
-	\For{$j \in \left(\B \setminus \left(\identZero{\B} \cup \noIntersect{\B} \cup \{i\}\right)\right)$}
+	\For{$j \in \left(\B \setminus \left(\identZero{\B} \cup \noIntersect{\B} \cup \{i\}\right)\right)$\label{algBuildH_line5}}
 		\If{$j \not\in \contains{\B}{i}$}{ solve $NLP_H(\B,i,j)$ to obtain an optimal solution $(\lambda^*,\theta^*)$.}
 			\If{$\lambda^* = 0$}{ add $\left(j \cup \contains{\B}{j}\right)$ to $\contains{\B}{i}$.}
-			\ElsIf{$\lambda^* < 0$}{ add $i$ to $\noIntersect{\B}$ and exit the \textbf{for} loop beginning on Line 6.}
+			\ElsIf{$\lambda^* < 0$}{ add $i$ to $\noIntersect{\B}$ and exit the \textbf{for} loop beginning on Line \ref{algBuildH_line5}.}
 			\ElsIf{$\constraint{\B}{\ell}{\theta^*} > 0$ for all $\ell \in \left(\B \setminus \left(\identZero{\B} \cup \{i,j\}\right)\right)$}{ add $i$ to $\facets{\B}$.}		
 			\EndIf
 		\EndIf
 	\EndFor
+	\If{$\dim{\B} < k$ and $\contains{\B}{i} = \emptyset$ and $i \in \facets{\B}$}{ set $\dim{\B} = k$.}
+	\EndIf
 \EndFor
-\State Return $\identZero{\B}$, $\noIntersect{\B}$, $\facets{\B}$, and $\contains{\B}{\ell}$ for each $\ell \in \B$.
+\State Return $\identZero{\B}$, $\noIntersect{\B}$, $\facets{\B}$, $\contains{\B}{\ell}$ for each $\ell \in \B$, and $\dim{\B}$.
 \end{algorithmic}
 \end{algorithm}
 
