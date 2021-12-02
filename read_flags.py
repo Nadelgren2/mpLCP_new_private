@@ -58,6 +58,9 @@ def PrintInvalidParameterMessage(flag, curValue, validValues, logging):
 #           checkDimWithF   --  a boolean indicating whether or not to check
 #                               the dimension of an invariancy region when 
 #                               building the set F.
+#           useAprime       --  a boolean indicating whether or not to use a
+#                               "simplified" version of NLP_A when looking for 
+#                               adjacent regions using exchange pivots
 #
 # Outputs:  linearSolver
 #           nonlinearSolver
@@ -66,7 +69,7 @@ def PrintInvalidParameterMessage(flag, curValue, validValues, logging):
 #           nlpsAsFeasProbs
 #           checkFwithEH
 #           checkDimWithF
-def ReadFlags(sys, logging, linearSolver, nonlinearSolver, parallelPivots, useCrissCross, nlpsAsFeasProbs, checkFwithEH, checkDimWithF):
+def ReadFlags(sys, logging, linearSolver, nonlinearSolver, parallelPivots, useCrissCross, nlpsAsFeasProbs, checkFwithEH, checkDimWithF, useAprime):
     # Read the flags
     
     i = 2
@@ -123,6 +126,14 @@ def ReadFlags(sys, logging, linearSolver, nonlinearSolver, parallelPivots, useCr
                     checkDimWithF = False
                 else:
                     PrintInvalidParameterMessage("-checkDimWithF", checkDimWithF, "T and F", logging);
+            elif sys.argv[i] == "-useAp":
+                i += 1
+                if sys.argv[i].upper() == "T":
+                    useAprime = True
+                elif sys.argv[i].upper() == "F":
+                    useAprime = False
+                else:
+                    PrintInvalidParameterMessage("-useAp", checkDimWithF, "T and F", logging);
         i += 1
     
-    return linearSolver, nonlinearSolver, parallelPivots, useCrissCross, nlpsAsFeasProbs, checkFwithEH, checkDimWithF
+    return linearSolver, nonlinearSolver, parallelPivots, useCrissCross, nlpsAsFeasProbs, checkFwithEH, checkDimWithF, useAprime

@@ -62,8 +62,8 @@ def Ellipsoid(pari, obj, in_con, xVar, grads, Q, x, tol, maxIter):
     for l in range(len(in_con)):
         violation[l] = pari.substvec(in_con[l], xVar, x)
     
-    print("Inequality violations:")
-    print(violation)
+#    print("Inequality violations:")
+#    print(violation)
     
     maxViol = max(violation)
     if maxViol > x[-2]:
@@ -77,7 +77,7 @@ def Ellipsoid(pari, obj, in_con, xVar, grads, Q, x, tol, maxIter):
         j = 0
         alpha = 1
 
-        print("******** Optimization Step, Iteration: " + str(i) + " *********")
+#        print("******** Optimization Step, Iteration: " + str(i) + " *********")
 #        print("Original Q:")
 #        for row in Q:
 #            print(row)
@@ -85,11 +85,11 @@ def Ellipsoid(pari, obj, in_con, xVar, grads, Q, x, tol, maxIter):
             j = (index + k) % len(in_con)
             val = pari.substvec(in_con[j], xVar, x)
             if val > tol:
-                print("Violated Row: " + str(j) + "\tValue: " + str(val))
+#                print("Violated Row: " + str(j) + "\tValue: " + str(val))
                 p = in_con[j]
                 percent_change = (violation[j] - val)/val
-                print("Percent change from last time: ")
-                print(percent_change)
+#                print("Percent change from last time: ")
+#                print(percent_change)
                 if percent_change > tol:
                     iter_w_no_improve[j] = 0
                 elif violation[j] > 0:
@@ -99,12 +99,12 @@ def Ellipsoid(pari, obj, in_con, xVar, grads, Q, x, tol, maxIter):
         index = j
         # exit if there is no improvement. It is unlikely that we can satisfy the equality and the inequalities at the same time
         if i > 1 and iter_w_no_improve[index] > 1:
-            print("Exiting due to no improvement")
+#            print("Exiting due to no improvement")
             break
         if p == obj:
-            print("p is the objective")
+#            print("p is the objective")
             val = pari.substvec(p, xVar, x)
-            print(val)
+#            print(val)
             if val < 0.0:
                 feas = True
         if not feas:
@@ -224,15 +224,15 @@ def EllipsoidEq(pari, obj, eq_con, in_con, xVar, grads, Q, x, tol, maxIter):
         eq_at_x = float(pari.substvec(eq_con, xVar, x))
         
     
-    print("Point after initial projection:")
-    print(x)
+#    print("Point after initial projection:")
+#    print(x)
     
     # Find the maximum violation in the constraints and set x[-2] to this value. This attempts to find a feasible starting point.
     for l in range(len(in_con)):
         violation[l] = pari.substvec(in_con[l], xVar, x)
     
-    print("Inequality violations:")
-    print(violation)
+#    print("Inequality violations:")
+#    print(violation)
     
     maxViol = max(violation)
     if maxViol > x[-2]:
@@ -270,7 +270,7 @@ def EllipsoidEq(pari, obj, eq_con, in_con, xVar, grads, Q, x, tol, maxIter):
 #        print("Equality evaluated at x:")
 #        print(eq_at_x)
         
-        print("******** Optimization Step, Iteration: " + str(i) + " *********")
+#        print("******** Optimization Step, Iteration: " + str(i) + " *********")
 #        print("Original Q:")
 #        for row in Q:
 #            print(row)
@@ -278,11 +278,11 @@ def EllipsoidEq(pari, obj, eq_con, in_con, xVar, grads, Q, x, tol, maxIter):
             j = (index + k) % len(in_con)
             val = pari.substvec(in_con[j], xVar, x)
             if val > tol:
-                print("Violated Row: " + str(j) + "\tValue: " + str(val))
+#                print("Violated Row: " + str(j) + "\tValue: " + str(val))
                 p = in_con[j]
                 percent_change = (violation[j] - val)/val
-                print("Percent change from last time: ")
-                print(percent_change)
+#                print("Percent change from last time: ")
+#                print(percent_change)
                 if percent_change > tol:
                     iter_w_no_improve[j] = 0
                 elif violation[j] > 0:
@@ -292,12 +292,12 @@ def EllipsoidEq(pari, obj, eq_con, in_con, xVar, grads, Q, x, tol, maxIter):
         index = j
         # exit if there is no improvement. It is unlikely that we can satisfy the equality and the inequalities at the same time
         if i > 1 and iter_w_no_improve[index] > 1:
-            print("Exiting due to no improvement")
+#            print("Exiting due to no improvement")
             break
         if p == obj:
 #            print("p is the objective")
             val = pari.substvec(p, xVar, x)
-            print(val)
+#            print(val)
             if val < 0.0:
                 feas = True
         if not feas:

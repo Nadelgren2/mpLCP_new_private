@@ -47,6 +47,7 @@ useCrissCross   = False
 nlpsAsFeasProbs = False
 checkFwithEH    = True
 checkDimWithF   = True
+useAprime       = True
 linearSolver    = "glpk"
 nonlinearSolver = ""
 gMatrix         = 0
@@ -55,7 +56,7 @@ paramSpace      = []
 startingPoint   = []
 epsilon         = 0.0000001
 parallelPivots  = False
-parallel        = True
+parallel        = False #True
 feasible        = False
 originalGmatrix = []
 originalBasis   = list(range(numVar))
@@ -63,21 +64,24 @@ Q0 = []
 midpoint = []
 ellipsoidTol    = 0.01
 ellipsoidIter   = 50
+outputFilename  = "Solution.txt"
 
 
 # Set parameters using command line flags
 if len(sys.argv) > 2:
-    linearSolver, nonlinearSolver, parallelPivots, useCrissCross, nlpsAsFeasProbs, checkFwithEH, checkDimWithF = ReadFlags(sys, 
-                                                                                                                            logging, 
-                                                                                                                            linearSolver, 
-                                                                                                                            nonlinearSolver, 
-                                                                                                                            parallelPivots, 
-                                                                                                                            useCrissCross, 
-                                                                                                                            nlpsAsFeasProbs,
-                                                                                                                            checkFwithEH,
-                                                                                                                            checkDimWithF)
+    linearSolver, nonlinearSolver, parallelPivots, useCrissCross, nlpsAsFeasProbs, checkFwithEH, checkDimWithF, useAprime = ReadFlags(sys, 
+                                                                                                                                        logging, 
+                                                                                                                                        linearSolver, 
+                                                                                                                                        nonlinearSolver, 
+                                                                                                                                        parallelPivots, 
+                                                                                                                                        useCrissCross, 
+                                                                                                                                        nlpsAsFeasProbs,
+                                                                                                                                        checkFwithEH,
+                                                                                                                                        checkDimWithF,
+                                                                                                                                        useAprime)
 
 # Read in the problem instance
+t = time.time()
 numVar, numParam, gMatrix, xVar, paramSpace, mIsNumeric = ReadFile(pari, sys, re, numVar, numParam, gMatrix, xVar, paramSpace, gxInitialized, mIsNumeric)
 originalGmatrix = [row[:] for row in gMatrix] #deep copy
 
@@ -140,7 +144,7 @@ else:
 
 print("Current Basis:")
 print(basis)
-rgn0 = InvRgn(re, pari, pyo, gMatrix, basis, xVar, startingPoint, epsilon, nonlinearSolver, Q0, midpoint, ellipsoidTol, ellipsoidIter, paramSpace, nlpsAsFeasProbs, checkFwithEH, checkDimWithF)
+rgn0 = InvRgn(re, pari, pyo, gMatrix, basis, xVar, startingPoint, epsilon, nonlinearSolver, Q0, midpoint, ellipsoidTol, ellipsoidIter, paramSpace, nlpsAsFeasProbs, checkFwithEH, checkDimWithF, None)
 
 if feasible:
 
@@ -172,8 +176,11 @@ if not feasible:   # Traditional Phase 1 is required for determining the startin
 # If a feasible starting solution has been found after Phase 1, start Phase 2
 if feasible:
     print("\n\nFeasible. Process Region.")
-    while numToProcess.Value() > 0:
-        if not q.empty():
+    print(numToProcess.Value())
+    #while numToProcess.Value() > 0:
+    while not q.empty() or q.qsize() > 0:
+        print("Size of Q: " + str(q.qsize()))
+        if True: #not q.empty():
             rgn = q.get()
             if parallel:
                 p = multiprocessing.Process(target=ProcessRegion, args=(rgn, q, discoveredBases, finalPartition, re, pari, pyo, paramSpace, parallelPivots))
@@ -182,6 +189,8 @@ if feasible:
             else:
                 ProcessRegion(rgn, q, discoveredBases, finalPartition, re, pari, pyo, paramSpace, parallelPivots)
         numToProcess.Decrement()
+        print("Size of Q: " + str(q.qsize()))
+        print(q.empty())
     
     if parallel:
         for p in procs:
@@ -203,10 +212,57 @@ if feasible:
 #        reorder[order[k]] = k
 #    M = [rows[k] for k in reorder]
 
+totalTime = time.time() - t
+
 printMatrix(gMatrix)
 print('\n')
 printMatrix(paramSpace)
 print('\n')
 print(mIsNumeric)
 #printLatexTableau(basis, gMatrix)
+
+
+# Write the solution
+
+outputFile = open(outputFilename, 'w')
+
+print("The problem entered was an instance of mpLCP having the form\n", file = outputFile)
+print("\tw - M(x)z = q(x)\n\tw'z = 0\n\tw,z >= 0\n", file = outputFile)
+
+mx = max((len(str(ele.Str())) for row in originalGmatrix for ele in row[numVar:-1]))
+print("with M(x) =\n", file = outputFile)
+for row in originalGmatrix:
+    print("\t[ " + "  ".join(["{:<{mx}}".format(str((-1*ele).Str()),mx=mx) for ele in row[numVar:-1]]) + " ]", file = outputFile)
+    
+mx = max((len(str(ele.Str())) for row in originalGmatrix for ele in row[2*numVar:]))
+print("\nand q(x) =\n", file = outputFile)
+for row in originalGmatrix:
+    print("\t[ " + "  ".join(["{:<{mx}}".format(str(ele.Str()),mx=mx) for ele in row[2*numVar:]]) + " ]", file = outputFile)
+    
+mx = max((len(str(ele.Str())) for row in paramSpace for ele in row))
+print("\nsubject to the additional restriction that 'x' must satisfy:\n", file = outputFile)
+for row in paramSpace:
+    print("\t" + " <= ".join(["{:<{mx}}".format(str(ele.Str()),mx=mx) for ele in row]), file = outputFile)
+    
+print("\n\n\n**************************************************************************************************\n\nThe solution was computed in " + str(round(totalTime, 2)) + " seconds and consists of the following regions.\n\n**************************************************************************************************\n\n", file = outputFile)
+    
+k = 1
+while not finalPartition.empty():
+    print("\n\nRegion " + str(k) + ":\n", file = outputFile)
+    rgn = finalPartition.get()
+    rhs = rgn.RHS()
+    basis = rgn.Basis()
+    mx = max((len(str(ele.Str())) for row in rhs for ele in row))
+    for i in range(len(rhs)):
+        var = ""
+        if basis[i] < numVar:
+            var = "w_" + str(i + 1)
+        else:
+            var = "z_" + str(i + 1)
+        print("\t" + var + " = " + " ".join(["{:<{mx}}".format(str(ele.Str()),mx=mx) for ele in rhs[i]]) + " >= 0 ", file = outputFile)
+    k = k + 1
+        
+print("\n\n\n\nNote: The region descriptions above do not include the 'additional restrictions' listed at the top of this document, although these restrictions do, of course, apply to all regions. Additionally, all omitted variables should be assumed to be zero.", file = outputFile)
+        
+outputFile.close()
 

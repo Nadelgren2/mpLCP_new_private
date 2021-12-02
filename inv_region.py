@@ -53,7 +53,8 @@ class InvRgn:
                     paramSpace, 
                     nlpsAsFeasProbs, 
                     checkFwithEH,
-                    checkDimWithF):
+                    checkDimWithF,
+                    prevFacetIndex):
         self.solver     = nonlinearSolver
         self.grads      = [ [] for _ in range(len(basis) + len(paramSpace)) ]
         self.defIneq    = [ pari.zero() for _ in range(len(basis) + len(paramSpace)) ]
@@ -64,7 +65,9 @@ class InvRgn:
         self.startPnt   = startingPoint
         self.rhs        = []
         self.point      = []
+        self.e          = []
         self.f          = []
+        self.h          = []
         self.ellipseQ   = Q0
         self.ellipsePnt = midpoint
         self.ellipseTol = ellipsoidTol
@@ -78,15 +81,12 @@ class InvRgn:
         else:
             self.GetIneqAndGradients(pari, paramSpace, False)
         self.BuildZ(pari)
-        self.BuildEandH(re, pari, pyo)
+        self.BuildEandH(re, pari, pyo, prevFacetIndex)
 
     # Processing the invariancy region is finished. Only store the basis and the
     # defining constraints. No need to continue storing the entire tableau
     def Finalize(self):
-        for el in self.tableau:
-            rhs.append(el.Str())
         del self.tableau
-        
     
     # Getters
     def Tableau(self):
@@ -98,6 +98,9 @@ class InvRgn:
     def RHS(self):
         return self.rhs
         
+    def E(self):
+        return self.e
+        
     def Dim(self, re, pari, pyo):
         if self.dim == 0:
             pt, val, feas = self.IsFullDim(re, pari, pyo)
@@ -106,6 +109,10 @@ class InvRgn:
             else:
                 self.dim = len(self.xVar) - 3
         return self.dim
+        
+    # Setters
+    def SetAnE(self, i):
+        self.e[i] = True
         
     # Other Methods
     
@@ -178,10 +185,18 @@ class InvRgn:
     # Process the region
     def Process(self, q, discoveredBases, finalPartition, re, pari, pyo, paramSpace, parallelPivots):
         self.BuildF(re, pari, pyo)
+        print("The region being processed has the following rhs: ")
+        for i in range(len(self.basis)):
+            self.rhs.append(copy.deepcopy(self.tableau[i][-1]))
         for i in range(len(self.basis)):
             if self.f[i]:
-                newRegions, newBases = self.GetAdjacentRegionsAcross(i, discoveredBases, re, pari, pyo, paramSpace, parallelPivots)
-        print("Finish writing code for region processing")
+                newRegions = self.GetAdjacentRegionsAcross(i, discoveredBases, re, pari, pyo, paramSpace, parallelPivots)
+                for rgn in newRegions:
+                    q.put(rgn)
+        print("Size of Q: " + str(q.qsize()))
+        self.Finalize()
+        finalPartition.put(self)
+        #print("Finish writing code for region processing")
         
     # Find all full dimensional regions across the given 'facet'
     def GetAdjacentRegionsAcross(self, i, discoveredBases, re, pari, pyo, paramSpace, parallelPivots):
@@ -201,7 +216,7 @@ class InvRgn:
             #line 3
             print(self.tableau[i][iComp])
             print(pari.poldegree(self.tableau[i][iComp]))
-            if pari.poldegree(self.tableau[i][iComp]) >= 0: # pari degree is negative inf for 0, 0 for constants, and >0 otherwise
+            if pari.poldegree(pari.numerator(self.tableau[i][iComp])) >= 0: # pari degree is negative inf for 0, 0 for other constants, and !=0 otherwise
                 #generate new region using a diagonal pivot
                 newRegion = InvRgn(re, 
                                    pari, 
@@ -219,13 +234,29 @@ class InvRgn:
                                    paramSpace, 
                                    self.nlpFeas, 
                                    self.fWithEH, 
-                                   self.dWithF)
+                                   self.dWithF,
+                                   i)
+                discoveredBases.append(newBasis)
+                dim = newRegion.Dim(re, pari, pyo)
+                #line 4
+                if dim == len(self.xVar) - 2:
+                    newRegions.append(newRegion)
+                #line 5
+                else:
+                    newRegions = newRegion.GetAdjacentKminus1(i, discoveredBases, re, pari, pyo, paramSpace, parallelPivots)
+            else:
+                print("Finish writing code for getting adjacent regions")
         #printMatrix(newRegion.Tableau())
         print('\n')
         print(self.basis)
         print(newBasis)
-        print("Finish writing code for getting adjacent regions")
-        return newRegions, newBases
+        #print("Finish writing code for getting adjacent regions")
+        return newRegions
+        
+    # Find all full dimensional regions across the given 'facet' when the current region is (k-1)-dimensional
+    def GetAdjacentKminus1(self, i, discoveredBases, re, pari, pyo, paramSpace, parallelPivots):
+        print("Finish writing code for getting adjacent regions to a (k-1)-dimensional")
+        return newRegions
         
     # Determine the basis elements whose associated RHS's in the tableau form
     # (k-1)-dimensional boundaries of the invariancy region
@@ -235,12 +266,16 @@ class InvRgn:
             if not self.z[i] and not self.e[i] and not self.f[i]:
                 print("Entering if for " + str(i))
                 optPoint, objVal, feasible = self.SolveNlpF(re, pari, pyo, i)
+                if feasible and objVal < -self.eps:
+                    self.f[i] = True
+        print("F")
+        print(self.f)
         
     # Build the set Z of all RHS entries that are identically zero.
     def BuildZ(self, pari):
         self.z = [False for i in range(len(self.basis))]
         for i in range(len(self.z)):
-            if pari.poldegree(self.tableau[i][-1]) < 0: #in pari, the degree of zero is negative infinity. The degree of other constants is 0.
+            if pari.poldegree(pari.numerator(self.tableau[i][-1])) < 0: #in pari, the degree of zero is negative infinity. The degree of other constants is 0.
                 self.z[i] = True;
         
     # Build the sets:
@@ -251,11 +286,14 @@ class InvRgn:
     #               with "i". Generally, this indicates that the RHS associated
     #               with each "j" in H[i] is a (polynomial) multiple of the RHS
     #               associated with "i".
-    def BuildEandH(self, re, pari, pyo):
+    def BuildEandH(self, re, pari, pyo, prevFacetIndex):
         t = time.time()
         self.e = [False for i in range(len(self.basis))]
         self.f = [False for i in range(len(self.basis))]
         self.h = [ [False for i in range(len(self.basis))] for i in range(len(self.basis)) ]
+        #ensure that we do not attempt to pivot across the "facet" we just came across
+        if prevFacetIndex is not None:
+            self.e[prevFacetIndex] = True
         for i in range(len(self.basis)):
             print("Processing Basis Element: " + str(self.basis[i]))
             if not self.z[i] and not self.e[i]:
