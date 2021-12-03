@@ -30,7 +30,7 @@ subject to the additional restriction that 'x' must satisfy:
 
 **************************************************************************************************
 
-The solution was computed in 0.35 seconds and consists of the following regions.
+The solution was computed in 0.64 seconds and consists of the following regions.
 
 **************************************************************************************************
 

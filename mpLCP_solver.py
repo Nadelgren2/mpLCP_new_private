@@ -144,6 +144,8 @@ else:
 
 print("Current Basis:")
 print(basis)
+print(feasible)
+
 rgn0 = InvRgn(re, pari, pyo, gMatrix, basis, xVar, startingPoint, epsilon, nonlinearSolver, Q0, midpoint, ellipsoidTol, ellipsoidIter, paramSpace, nlpsAsFeasProbs, checkFwithEH, checkDimWithF, None)
 
 if feasible:

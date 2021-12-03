@@ -209,6 +209,10 @@ def EllipsoidEq(pari, obj, eq_con, in_con, xVar, grads, Q, x, tol, maxIter):
     
     # Perform initial projection of x to the flat of the equality constraint.
     eq_at_x = float(pari.substvec(eq_con, xVar, x))
+    eq_grad_at_x = []
+    for d in eq_grad:
+        eq_grad_at_x.append(float(pari.substvec(d, xVar, x)))
+            
     while eq_at_x > tol or eq_at_x < -1*tol:
         #Project x to the flat of the constraint.
         eq_grad_at_x = []
@@ -238,7 +242,7 @@ def EllipsoidEq(pari, obj, eq_con, in_con, xVar, grads, Q, x, tol, maxIter):
     if maxViol > x[-2]:
         x[-2] = -1*maxViol
         Q[-2][-2] = x[-2]**2
-    
+        
     while s > tol and i <= maxIter and not feas:
 #        print("Iteration: " + str(i))
 #        last_index = index
@@ -246,6 +250,10 @@ def EllipsoidEq(pari, obj, eq_con, in_con, xVar, grads, Q, x, tol, maxIter):
         p = obj
         j = 0
         alpha = 1
+        
+#        print(eq_con)
+#        print(x)
+        
         eq_at_x = float(pari.substvec(eq_con, xVar, x))
 #        print("******** Projecting x *********")
 #        print("x before projection:")
@@ -259,8 +267,9 @@ def EllipsoidEq(pari, obj, eq_con, in_con, xVar, grads, Q, x, tol, maxIter):
                 for d in eq_grad:
                     eq_grad_at_x.append(float(pari.substvec(d, xVar, x)))
                 eq_grad_at_x = numpy.array(eq_grad_at_x)
-    #            print("A:")
-    #            print(eq_grad_at_x)
+#                print("A:")
+#                print(eq_grad_at_x)
+                
                 # eq_grad_at_x is matrix A as in above referenced dissertation
                 # similarly, eq_at_x is v
                 alpha = -1*eq_at_x/(numpy.dot(eq_grad_at_x, eq_grad_at_x))
@@ -269,7 +278,7 @@ def EllipsoidEq(pari, obj, eq_con, in_con, xVar, grads, Q, x, tol, maxIter):
             
 #        print("Equality evaluated at x:")
 #        print(eq_at_x)
-        
+#        
 #        print("******** Optimization Step, Iteration: " + str(i) + " *********")
 #        print("Original Q:")
 #        for row in Q:
@@ -316,6 +325,9 @@ def EllipsoidEq(pari, obj, eq_con, in_con, xVar, grads, Q, x, tol, maxIter):
 #            print("Normalized Gradient at x:")
 #            print(grad_at_x)
             
+#            for row in Q:
+#                print(row)
+#            print(eq_grad_at_x)
             
             qat = numpy.matmul(Q,eq_grad_at_x)
 #            print("QAt:")
@@ -330,7 +342,7 @@ def EllipsoidEq(pari, obj, eq_con, in_con, xVar, grads, Q, x, tol, maxIter):
 #            print("Numerator of d:")
 #            print(num)
             rt = numpy.dot(grad_at_x, num)
-            if rt < 0.0:
+            if rt < tol/1000.:
                 break
             den = -1*(rt)**0.5
 #            print("Denominator of d:")
