@@ -126,7 +126,7 @@ def Ellipsoid(pari, obj, in_con, xVar, grads, Q, x, tol, maxIter):
             
             num = numpy.matmul(Q,grad_at_x)
             rt = numpy.dot(grad_at_x, num)
-            if rt < 0.0:
+            if rt < tol/100000.:
                 break
             den = -1*(rt)**0.5
 #            print("Denominator of d:")
@@ -204,8 +204,8 @@ def EllipsoidEq(pari, obj, eq_con, in_con, xVar, grads, Q, x, tol, maxIter):
     
     print("---------- Ellipsoid Method With A Single Equality Constraint ------------------")
     
-    print("Starting point:")
-    print(x)
+#    print("Starting point:")
+#    print(x)
     
     # Perform initial projection of x to the flat of the equality constraint.
     eq_at_x = float(pari.substvec(eq_con, xVar, x))
@@ -342,7 +342,8 @@ def EllipsoidEq(pari, obj, eq_con, in_con, xVar, grads, Q, x, tol, maxIter):
 #            print("Numerator of d:")
 #            print(num)
             rt = numpy.dot(grad_at_x, num)
-            if rt < tol/1000.:
+#            print("rt: " + str(rt))
+            if rt < tol/100000.:
                 break
             den = -1*(rt)**0.5
 #            print("Denominator of d:")

@@ -47,6 +47,7 @@ useCrissCross   = False
 nlpsAsFeasProbs = False
 checkFwithEH    = True
 checkDimWithF   = True
+checkSwithEHF   = True
 useAprime       = True
 linearSolver    = "glpk"
 nonlinearSolver = ""
@@ -69,16 +70,17 @@ outputFilename  = "Solution.txt"
 
 # Set parameters using command line flags
 if len(sys.argv) > 2:
-    linearSolver, nonlinearSolver, parallelPivots, useCrissCross, nlpsAsFeasProbs, checkFwithEH, checkDimWithF, useAprime = ReadFlags(sys, 
-                                                                                                                                        logging, 
-                                                                                                                                        linearSolver, 
-                                                                                                                                        nonlinearSolver, 
-                                                                                                                                        parallelPivots, 
-                                                                                                                                        useCrissCross, 
-                                                                                                                                        nlpsAsFeasProbs,
-                                                                                                                                        checkFwithEH,
-                                                                                                                                        checkDimWithF,
-                                                                                                                                        useAprime)
+    linearSolver, nonlinearSolver, parallelPivots, useCrissCross, nlpsAsFeasProbs, checkFwithEH, checkDimWithF, useAprime, checkSwithEHF = ReadFlags(sys, 
+                                                                                                                                                    logging, 
+                                                                                                                                                    linearSolver, 
+                                                                                                                                                    nonlinearSolver, 
+                                                                                                                                                    parallelPivots, 
+                                                                                                                                                    useCrissCross, 
+                                                                                                                                                    nlpsAsFeasProbs,
+                                                                                                                                                    checkFwithEH,
+                                                                                                                                                    checkDimWithF,
+                                                                                                                                                    useAprime,
+                                                                                                                                                    checkSwithEHF)
 
 # Read in the problem instance
 t = time.time()
@@ -126,8 +128,8 @@ if nonlinearSolver == "":
             lowVals.append(pyo.value(model.o))
     highVals.append(2*startingPoint[-1])
     highVals.append(1)
-    lowVals.append(0)
-    lowVals.append(0)
+    lowVals.append(-1)
+    lowVals.append(-1)
     distanceSq = 0.0
     for i in range(len(Q0)):
         Q0[i][i] = len(Q0)/4*(highVals[i] - lowVals[i])**2
@@ -146,7 +148,7 @@ print("Current Basis:")
 print(basis)
 print(feasible)
 
-rgn0 = InvRgn(re, pari, pyo, gMatrix, basis, xVar, startingPoint, epsilon, nonlinearSolver, Q0, midpoint, ellipsoidTol, ellipsoidIter, paramSpace, nlpsAsFeasProbs, checkFwithEH, checkDimWithF, None)
+rgn0 = InvRgn(re, pari, pyo, gMatrix, basis, xVar, startingPoint, epsilon, nonlinearSolver, Q0, midpoint, ellipsoidTol, ellipsoidIter, paramSpace, nlpsAsFeasProbs, checkFwithEH, checkDimWithF, None, feasible, checkSwithEHF)
 
 if feasible:
 
@@ -173,7 +175,29 @@ finalPartition = multiprocessing.Queue()
 procs = []
 
 if not feasible:   # Traditional Phase 1 is required for determining the starting basis
-    sys.exit("Write Code for Phase 1")
+    startingRgn = multiprocessing.Queue()
+    while startingRgn.empty():
+        rgn = q.get()
+        if parallel:
+            sys.exit("Write Code for Parallel Phase 1")
+        else:
+            ProcessRegion(rgn, q, discoveredBases, finalPartition, re, pari, pyo, paramSpace, parallelPivots, startingRgn, False)
+            print("Finished Processing Phase 1 Region")
+    print("Phase 1 Complete. Remove rho and continue.")
+    rgn0 = startingRgn.get()
+    printMatrix(rgn0.Tableau())
+    rgn0.ReducePhase(pari)
+    if nonlinearSolver == "":
+        rgn0.GetIneqAndGradients(pari, paramSpace, True, True)
+    else:
+        rgn0.GetIneqAndGradients(pari, paramSpace, False, True)
+    rgn0.BuildZ(pari)
+    rgn0.BuildEandH(re, pari, pyo, None, True)
+    print("-------------------")
+    printMatrix(rgn0.Tableau())
+    feasible = True
+    q.put(rgn0)
+    quit()
 
 # If a feasible starting solution has been found after Phase 1, start Phase 2
 if feasible:
@@ -185,11 +209,11 @@ if feasible:
         if True: #not q.empty():
             rgn = q.get()
             if parallel:
-                p = multiprocessing.Process(target=ProcessRegion, args=(rgn, q, discoveredBases, finalPartition, re, pari, pyo, paramSpace, parallelPivots))
+                p = multiprocessing.Process(target=ProcessRegion, args=(rgn, q, discoveredBases, finalPartition, re, pari, pyo, paramSpace, parallelPivots, None, True))
                 p.start()
                 procs.append(p)
             else:
-                ProcessRegion(rgn, q, discoveredBases, finalPartition, re, pari, pyo, paramSpace, parallelPivots)
+                ProcessRegion(rgn, q, discoveredBases, finalPartition, re, pari, pyo, paramSpace, parallelPivots, None, True)
         numToProcess.Decrement()
         print("Size of Q: " + str(q.qsize()))
         print(q.empty())

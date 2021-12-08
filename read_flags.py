@@ -61,6 +61,10 @@ def PrintInvalidParameterMessage(flag, curValue, validValues, logging):
 #           useAprime       --  a boolean indicating whether or not to use a
 #                               "simplified" version of NLP_A when looking for 
 #                               adjacent regions using exchange pivots
+#           checkSwithEHF   --  a boolean indicating whether or not to check for
+#                               the possibility of skipping NLP_S during phase 1
+#                               if an appropriate point is found when building
+#                               sets E, H, and F
 #
 # Outputs:  linearSolver
 #           nonlinearSolver
@@ -69,7 +73,9 @@ def PrintInvalidParameterMessage(flag, curValue, validValues, logging):
 #           nlpsAsFeasProbs
 #           checkFwithEH
 #           checkDimWithF
-def ReadFlags(sys, logging, linearSolver, nonlinearSolver, parallelPivots, useCrissCross, nlpsAsFeasProbs, checkFwithEH, checkDimWithF, useAprime):
+#           useAprime
+#           checkSwithEHF
+def ReadFlags(sys, logging, linearSolver, nonlinearSolver, parallelPivots, useCrissCross, nlpsAsFeasProbs, checkFwithEH, checkDimWithF, useAprime, checkSwithEHF):
     # Read the flags
     
     i = 2
@@ -134,6 +140,14 @@ def ReadFlags(sys, logging, linearSolver, nonlinearSolver, parallelPivots, useCr
                     useAprime = False
                 else:
                     PrintInvalidParameterMessage("-useAp", checkDimWithF, "T and F", logging);
+            elif sys.argv[i] == "-checkSwithEHF":
+                i += 1
+                if sys.argv[i].upper() == "T":
+                    checkSwithEHF = True
+                elif sys.argv[i].upper() == "F":
+                    checkSwithEHF = False
+                else:
+                    PrintInvalidParameterMessage("-checkSwithEHF", checkDimWithF, "T and F", logging);
         i += 1
     
-    return linearSolver, nonlinearSolver, parallelPivots, useCrissCross, nlpsAsFeasProbs, checkFwithEH, checkDimWithF, useAprime
+    return linearSolver, nonlinearSolver, parallelPivots, useCrissCross, nlpsAsFeasProbs, checkFwithEH, checkDimWithF, useAprime, checkSwithEHF

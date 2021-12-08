@@ -33,6 +33,7 @@
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{proposition}[theorem]{Proposition}
 \newtheorem{claim}[theorem]{Claim}
+\newtheorem{obs}[theorem]{Observation}
 \newtheorem{corollary}[theorem]{Corollary}
 \newtheorem{definition}[theorem]{Definition}
 \newtheorem{example}[theorem]{Example}
@@ -409,6 +410,13 @@ From \eqref{alpha_l} and \eqref{alpha_xii}, it is clear that $\alpha_\ell(\theta
 $(\Rightarrow)$:\\
 The forward direction of the proof is straightforward as $\mathcal{IR}_{\B}$ and $\mathcal{IR}_{\B'}$ can only be adjacent along $\hy_{\B}^i$ if $dim\left(\mathcal{IR}_{\B} \cap \mathcal{IR}_{\B'} \cap \hy_{\B}^i\right) = k-1$. Then, by selecting $\theta' \in relint\left(\mathcal{IR}_{\B} \cap \mathcal{IR}_{\B'} \cap \hy_{\B}^i\right)$, the logic of the reverse direction of this proof can be reversed to show that the equality constraint of $NLP_A'(\B,i,j)$ is satisfied at $\theta'$ and, moreover, all inequality constraints of $NLP_A'(\B,i,j)$ are satisfied strictly at $(\lambda, \theta) = (0,\theta')$. This strict satisfaction of the inequalities of $NLP_A'(\B,i,j)$ when $\lambda = 0$ implies that there must exist an $\epsilon > 0$ such that for all $\lambda' \in \ball{\epsilon}{0}$, all the inequalities of $NLP_A'(\B,i,j)$ are satisfied strictly at $(\lambda',\theta')$. As $\ball{\epsilon}{0} \cap \{\lambda: \lambda > 0\} \neq \emptyset$, this completes the proof.
 \end{proof}
+
+\item We can sometimes avoid solving $NLP_S$ in Phase 1.
+\begin{obs}\label{obs:nlps}
+Let a f.c.b. $\B$ and distinct $i,j \in \B$ be given and suppose that there exists a point $(\lambda, \theta, \rho)$ that is feasible to either $NLP_F^{ph1}(\B,i)$ or $NLP_H^{ph1}(\B,i,j)$. Then the point $(\theta,\rho)$ is feasible to $NLP_S(\B)$. 
+\end{obs}
+As a result of Observation \ref{obs:nlps}, we note that if at any point during Phase 1 we process a f.c.b. $\B$ and discover a point $(\lambda, \theta, \rho)$ during the execution of either \textsc{BuildF\_Ph1}$(\B)$ or \textsc{BuildZEH\_Ph1}$(\B)$ that is feasible to either $NLP_F^{ph1}(\B,i)$ or $NLP_H^{ph1}(\B,i,j)$ for some $i,j \in \B$ and for which $\rho < 0$, then it is unnecessary to solve $NLP_S$ on line 3 of Algorithm \ref{algInitial} and we can move inside the ``if'' statement given on line 4.
+
 
 \end{enumerate}
 
